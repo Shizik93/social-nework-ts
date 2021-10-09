@@ -28,7 +28,7 @@ export function MyPosts(props: PropsMyProfileType) {
         <div className={m.myPosts}>
             <h3>My Posts</h3>
             <div>
-                <div><textarea value={props.textarea}  onChange={onChangeTextArea}></textarea></div>
+                <div><textarea value={props.textarea}  onChange={onChangeTextArea}/></div>
                 <div>
                     <button onClick={addPost}>Add post</button>
                 </div>

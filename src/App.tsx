@@ -8,12 +8,14 @@ import {Profile} from "./components/Profile/Profile";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
-import {TypeRootState} from "./redux/state";
+
 import { Route } from "react-router-dom";
+import {TypeRootState} from "./redux/state";
  type PropsType={
-     state: TypeRootState
+     state:TypeRootState
      addPost:()=>void
      onChangeTextArea:(value:string)=>void
+
  }
 
 function App(props:PropsType) {

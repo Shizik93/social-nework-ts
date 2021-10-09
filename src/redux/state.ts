@@ -1,31 +1,3 @@
-import {RerenderEntireTree} from "../render"
-
-
-export const state: TypeRootState = {
-    profilePage: {
-        post: [
-            {message: 'Hi,how are you?', like: 12},
-            {message: 'It is my first post', like: 11}]
-    },
-    dialogsPage: {
-        messages: [
-            {message: 'Hi'},
-            {message: 'How is your it-kamasutra?'},
-            {message: 'Yo'}
-        ],
-        dialogs: [
-            {id: 1, name: 'Dimych'},
-            {id: 2, name: 'Andrey'},
-            {id: 3, name: 'Sveta'},
-            {id: 4, name: 'Sasha'},
-            {id: 5, name: 'Victor'},
-            {id: 6, name: 'Valera'},
-        ]
-
-    },
-    textarea: ''
-}
-
 export type TypeDialogs = {
     id: number;
     name: string
@@ -49,25 +21,59 @@ export type TypeRootState = {
     dialogsPage: TypeDialogsPage
     textarea: string
 }
-export const onChangeTextArea = (value: string) => {
-    state.textarea = value
-    RerenderEntireTree(state)
-}
-export const addPost = () => {
-    let newPost = {
-        id: 5,
-        message: state.textarea,
-        like: 0
+
+let store: any = {
+    _state: {
+        profilePage: {
+            post: [
+                {message: 'Hi,how are you?', like: 12},
+                {message: 'It is my first post', like: 11}]
+        },
+        dialogsPage: {
+            messages: [
+                {message: 'Hi'},
+                {message: 'How is your it-kamasutra?'},
+                {message: 'Yo'}
+            ],
+            dialogs: [
+                {id: 1, name: 'Dimych'},
+                {id: 2, name: 'Andrey'},
+                {id: 3, name: 'Sveta'},
+                {id: 4, name: 'Sasha'},
+                {id: 5, name: 'Victor'},
+                {id: 6, name: 'Valera'},
+            ]
+
+        },
+        textarea: ''
+    },
+    getState(){
+        return this._state
+    },
+    callSubscriber(_state?: TypeRootState) {
+    },
+    onChangeTextArea(value: string) {
+
+        this._state.textarea = value
+        this.callSubscriber(this._state)
+    },
+    addPost() {
+
+        let newPost = {
+            id: 5,
+            message: this._state.textarea,
+            like: 0
+        }
+
+        this._state.profilePage.post.push(newPost)
+        this._state.textarea = ''
+        this.callSubscriber(this._state)
+
+
+    },
+    subscribe(observer: any) {
+        this.callSubscriber = observer
     }
-
-    state.profilePage.post.push(newPost)
-    state.textarea = ''
-
-
-    RerenderEntireTree(state)
-
-
 }
 
-
-export default state
+export default store
