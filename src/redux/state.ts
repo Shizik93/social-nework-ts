@@ -1,7 +1,7 @@
 
 
 
-const state:TypeRootState = {
+export const state:TypeRootState = {
     profilePage: {
         post: [
             {message: 'Hi,how are you?', like: 12},
