@@ -1,3 +1,6 @@
+import {dialogsReducer} from "./dialogs-reducer";
+import {profileReducer} from "./profile-reducer";
+
 export type TypeDialogs = {
     id: number;
     name: string
@@ -84,38 +87,9 @@ let store: any = {
     },
 
     dispatch(action: any) {
-
-        if (action.type === 'ADD-POST') {
-            let newPost = {
-                id: 5,
-                message: this._state.profilePage.textarea,
-                like: 0
-            }
-            this._state.profilePage.post.push(newPost)
-            console.log(this._state.profilePage.textarea)
-            this._state.profilePage.textarea = ''
-            this._callSubscriber(this._state)
-        }
-        else if (action.type === 'CHANGE-TEXT') {
-            this._state.profilePage.textarea = action.value
-            this._callSubscriber(this._state)
-
-        }
-        else if (action.type === 'CHANGE-NEW-MESSAGE') {
-
-            this._state.dialogsPage.newMessage = action.newMessage
-            this._callSubscriber(this._state)
-
-        }
-        else if (action.type === 'SEND-MESSAGE') {
-            this._state.dialogsPage.messages.push({message: this._state.dialogsPage.newMessage})
-            this._state.dialogsPage.newMessage = ''
-            this._callSubscriber(this._state)
-
-        }
-        else {
-            return this._state
-        }
+        this._state.profilePage=profileReducer(this._state.profilePage,action)
+          this._state.dialogsPage=dialogsReducer(this._state.dialogsPage,action)
+this._callSubscriber(this._state)
     }
 }
 
