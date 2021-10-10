@@ -16,7 +16,7 @@ export function MyPosts(props: PropsMyProfileType) {
     }
 
     const addPost = () => {
-        props.dispatch(AddPostAC)
+        props.dispatch(AddPostAC())
 
 
     }

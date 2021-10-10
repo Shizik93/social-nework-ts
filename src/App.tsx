@@ -28,7 +28,7 @@ function App(props:PropsType) {
 
 
                     <Route path='/dialogs' render={() => <Dialogs newMessage={props.state.dialogsPage.newMessage} dialogs={props.state.dialogsPage.dialogs} messages={props.state.dialogsPage.messages} dispatch={props.dispatch}/>}/>
-                    <Route path='/profile' render={() => <Profile  textarea={props.state.textarea}post={props.state.profilePage.post} dispatch={props.dispatch}/>}/>
+                    <Route path='/profile' render={() => <Profile  textarea={props.state.profilePage.textarea}post={props.state.profilePage.post} dispatch={props.dispatch}/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>

@@ -15,12 +15,13 @@ export type TypeDialogsPage = {
     dialogs: Array<TypeDialogs>
 }
 export type TypeProfilePage = {
+    textarea: string
     post: Array<TypePost>
 }
 export type TypeRootState = {
     profilePage: TypeProfilePage;
     dialogsPage: TypeDialogsPage
-    textarea: string
+
 }
 export const AddPostAC = () => {
     return {type: 'ADD-POST'} as const
@@ -38,9 +39,9 @@ export const ChangeNewMessageAC = (value: string) => {
     } as const
 
 }
-export const AddNewMessageAC = () => {
-    return{
-        type:'ADD-NEW-MESSAGE',
+export const SendMessageAC = () => {
+    return {
+        type: 'SEND-MESSAGE',
     }
 
 }
@@ -48,6 +49,7 @@ export const AddNewMessageAC = () => {
 let store: any = {
     _state: {
         profilePage: {
+            textarea: '',
             post: [
                 {message: 'Hi,how are you?', like: 12},
                 {message: 'It is my first post', like: 11}]
@@ -69,7 +71,7 @@ let store: any = {
             ]
 
         },
-        textarea: ''
+
     },
     _callSubscriber(_state?: TypeRootState) {
     },
@@ -81,19 +83,21 @@ let store: any = {
         this._callSubscriber = observer
     },
 
-    dispatch(action: any,) {
+    dispatch(action: any) {
+
         if (action.type === 'ADD-POST') {
             let newPost = {
                 id: 5,
-                message: this._state.textarea,
+                message: this._state.profilePage.textarea,
                 like: 0
             }
             this._state.profilePage.post.push(newPost)
-            this._state.textarea = ''
+            console.log(this._state.profilePage.textarea)
+            this._state.profilePage.textarea = ''
             this._callSubscriber(this._state)
         }
         else if (action.type === 'CHANGE-TEXT') {
-            this._state.textarea = action.value
+            this._state.profilePage.textarea = action.value
             this._callSubscriber(this._state)
 
         }
@@ -103,9 +107,9 @@ let store: any = {
             this._callSubscriber(this._state)
 
         }
-        else if(action.type==='ADD-NEW-MESSAGE'){
+        else if (action.type === 'SEND-MESSAGE') {
             this._state.dialogsPage.messages.push({message: this._state.dialogsPage.newMessage})
-            this._state.dialogsPage.newMessage=''
+            this._state.dialogsPage.newMessage = ''
             this._callSubscriber(this._state)
 
         }

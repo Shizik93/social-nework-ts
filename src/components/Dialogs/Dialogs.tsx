@@ -3,7 +3,12 @@ import React from "react";
 import m from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {AddNewMessageAC, ChangeNewMessageAC, TypeDialogs, TypeDialogsPage, TypeMessage} from "../../redux/state";
+import {
+    ChangeNewMessageAC,
+    SendMessageAC,
+    TypeDialogs,
+    TypeMessage
+} from "../../redux/state";
  type DialogsPropsType={
      newMessage:string
      dialogs:Array<TypeDialogs>
@@ -17,7 +22,7 @@ const ChangeNewMessage = (e:any) => {
 
 }
 const AddNewMessage= () => {
-    props.dispatch(AddNewMessageAC())
+    props.dispatch(SendMessageAC())
 
 
 }
