@@ -3,14 +3,23 @@ import React from "react";
 import m from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {TypeDialogsPage} from "../../redux/state";
+import {AddNewMessageAC, ChangeNewMessageAC, TypeDialogs, TypeDialogsPage, TypeMessage} from "../../redux/state";
+ type DialogsPropsType={
+     newMessage:string
+     dialogs:Array<TypeDialogs>
+     messages:Array<TypeMessage>
+     dispatch:(action:any)=>void
+ }
+
+function Dialogs(props: DialogsPropsType) {
+const ChangeNewMessage = (e:any) => {
+    props.dispatch(ChangeNewMessageAC(e.currentTarget.value))
+
+}
+const AddNewMessage= () => {
+    props.dispatch(AddNewMessageAC())
 
 
-function Dialogs(props: TypeDialogsPage) {
-let newMessage:any=React.createRef()
-const sendMessage = () => {
-  let text=newMessage.current.value
-    alert(text)
 }
 
     const dialogsElements = props.dialogs.map(d => <DialogItem id={d.id} name={d.name}/>,)
@@ -28,8 +37,8 @@ const sendMessage = () => {
 
             </div>
             <div>
-                <textarea ref={newMessage}></textarea>
-                <button onClick={sendMessage}>Send Message</button>
+                <textarea onChange={ChangeNewMessage} value={props.newMessage} ></textarea>
+                <button onClick={AddNewMessage}>Send Message</button>
             </div>
         </div>
     )

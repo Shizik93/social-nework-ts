@@ -1,23 +1,23 @@
 import m from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import {TypePost, TypeProfilePage} from "../../../redux/state";
+import {AddPostAC, ChangeTextAC, TypePost, TypeProfilePage} from "../../../redux/state";
 import React, {RefObject} from "react";
 
 type PropsMyProfileType = {
     post: Array<TypePost>
-    addPost: () => void
-    onChangeTextArea:(value:string)=>void
-    textarea:string
+    dispatch: (action: any) => void
+    textarea: string
 }
 
 export function MyPosts(props: PropsMyProfileType) {
-    const onChangeTextArea = (e:any) => {
+    const onChangeTextArea = (e: any) => {
+        props.dispatch(ChangeTextAC(e.currentTarget.value))
 
-        props.onChangeTextArea(e.currentTarget.value)
     }
 
     const addPost = () => {
-        props.addPost()
+        props.dispatch(AddPostAC)
+
 
     }
 
@@ -28,7 +28,7 @@ export function MyPosts(props: PropsMyProfileType) {
         <div className={m.myPosts}>
             <h3>My Posts</h3>
             <div>
-                <div><textarea value={props.textarea}  onChange={onChangeTextArea}/></div>
+                <div><textarea value={props.textarea} onChange={onChangeTextArea}/></div>
                 <div>
                     <button onClick={addPost}>Add post</button>
                 </div>

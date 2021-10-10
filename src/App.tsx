@@ -13,8 +13,7 @@ import { Route } from "react-router-dom";
 import {TypeRootState} from "./redux/state";
  type PropsType={
      state:TypeRootState
-     addPost:()=>void
-     onChangeTextArea:(value:string)=>void
+     dispatch:(action:any)=>void
 
  }
 
@@ -28,8 +27,8 @@ function App(props:PropsType) {
                 <div className='app-wrapper-content'>
 
 
-                    <Route path='/dialogs' render={() => <Dialogs dialogs={props.state.dialogsPage.dialogs} messages={props.state.dialogsPage.messages}/>}/>
-                    <Route path='/profile' render={() => <Profile  textarea={props.state.textarea}post={props.state.profilePage.post} addPost={props.addPost} onChangeTextArea={props.onChangeTextArea}/>}/>
+                    <Route path='/dialogs' render={() => <Dialogs newMessage={props.state.dialogsPage.newMessage} dialogs={props.state.dialogsPage.dialogs} messages={props.state.dialogsPage.messages} dispatch={props.dispatch}/>}/>
+                    <Route path='/profile' render={() => <Profile  textarea={props.state.textarea}post={props.state.profilePage.post} dispatch={props.dispatch}/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
