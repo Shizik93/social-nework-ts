@@ -26,28 +26,6 @@ export type TypeRootState = {
     dialogsPage: TypeDialogsPage
 
 }
-export const AddPostAC = () => {
-    return {type: 'ADD-POST'} as const
-}
-export const ChangeTextAC = (value: string) => {
-    return {
-        type: 'CHANGE-TEXT',
-        value: value
-    } as const
-}
-export const ChangeNewMessageAC = (value: string) => {
-    return {
-        type: 'CHANGE-NEW-MESSAGE',
-        newMessage: value
-    } as const
-
-}
-export const SendMessageAC = () => {
-    return {
-        type: 'SEND-MESSAGE',
-    }
-
-}
 
 let store: any = {
     _state: {

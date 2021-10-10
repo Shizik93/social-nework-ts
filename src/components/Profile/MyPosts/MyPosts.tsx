@@ -1,7 +1,8 @@
 import m from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import {AddPostAC, ChangeTextAC, TypePost, TypeProfilePage} from "../../../redux/state";
+import {TypePost} from "../../../redux/state";
 import React, {RefObject} from "react";
+import {AddPostAC, ChangeTextAC} from '../../../redux/profile-reducer';
 
 type PropsMyProfileType = {
     post: Array<TypePost>

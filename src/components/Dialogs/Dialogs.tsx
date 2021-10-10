@@ -4,11 +4,10 @@ import m from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {
-    ChangeNewMessageAC,
-    SendMessageAC,
     TypeDialogs,
     TypeMessage
 } from "../../redux/state";
+import {ChangeNewMessageAC, SendMessageAC} from "../../redux/dialogs-reducer";
  type DialogsPropsType={
      newMessage:string
      dialogs:Array<TypeDialogs>
