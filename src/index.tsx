@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
-import store, {TypeRootState} from "./redux/state";
 
+import store, {reducersType} from './redux/redux-store';
 
- const RerenderEntireTree = (state:TypeRootState) => {
-
+ const RerenderEntireTree = (state:reducersType) => {
+debugger
 
     ReactDOM.render(
         <BrowserRouter>
@@ -17,7 +17,7 @@ import store, {TypeRootState} from "./redux/state";
     );
 }
 RerenderEntireTree(store.getState())
-store.subscribe(RerenderEntireTree)
+store.subscribe(()=>RerenderEntireTree(store.getState()))
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

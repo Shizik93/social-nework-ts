@@ -1,7 +1,7 @@
 import React from "react";
 
 import m from './Post.module.css'
-import {TypePost} from "../../../../redux/state";
+import {TypePost} from "../../../../redux/store";
 
 
 

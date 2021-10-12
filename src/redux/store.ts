@@ -1,5 +1,3 @@
-import {dialogsReducer} from "./dialogs-reducer";
-import {profileReducer} from "./profile-reducer";
 
 export type TypeDialogs = {
     id: number;
@@ -26,7 +24,16 @@ export type TypeRootState = {
     dialogsPage: TypeDialogsPage
 
 }
+export type storeType={
+    _state:TypeRootState,
+    _callSubscriber:(_state?: TypeRootState)=>void,
+    getState:()=>TypeRootState,
+    subscribe:(observer:()=>void)=>void
+    dispatch:(action:any)=>void
 
+}
+
+/*
 let store: any = {
     _state: {
         profilePage: {
@@ -60,15 +67,15 @@ let store: any = {
     getState() {
         return this._state
     },
-    subscribe(observer: any) {
+    subscribe(observer: ()=>void) {
         this._callSubscriber = observer
     },
 
-    dispatch(action: any) {
+    dispatch(action:any/!*profileReducerType|dialogsReducerType*!/) {
         this._state.profilePage=profileReducer(this._state.profilePage,action)
           this._state.dialogsPage=dialogsReducer(this._state.dialogsPage,action)
 this._callSubscriber(this._state)
     }
 }
 
-export default store
+export default store*/

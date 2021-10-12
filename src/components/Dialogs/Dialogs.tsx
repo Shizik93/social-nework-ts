@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 
 import m from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
@@ -6,7 +6,7 @@ import Message from "./Message/Message";
 import {
     TypeDialogs,
     TypeMessage
-} from "../../redux/state";
+} from "../../redux/store";
 import {ChangeNewMessageAC, SendMessageAC} from "../../redux/dialogs-reducer";
  type DialogsPropsType={
      newMessage:string
@@ -16,7 +16,7 @@ import {ChangeNewMessageAC, SendMessageAC} from "../../redux/dialogs-reducer";
  }
 
 function Dialogs(props: DialogsPropsType) {
-const ChangeNewMessage = (e:any) => {
+const ChangeNewMessage = (e:ChangeEvent<HTMLTextAreaElement>) => {
     props.dispatch(ChangeNewMessageAC(e.currentTarget.value))
 
 }

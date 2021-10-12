@@ -1,7 +1,7 @@
 import m from "../Dialogs.module.css";
 import {NavLink} from "react-router-dom";
 import React from "react";
-import {TypeDialogs} from "../../../redux/state";
+import {TypeDialogs} from "../../../redux/store";
 
 
 
