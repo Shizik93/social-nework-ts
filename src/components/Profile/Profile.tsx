@@ -1,7 +1,7 @@
 import React from "react";
-import { MyPosts } from "./MyPosts/MyPosts";
 import ProfileInfo from "./MyPosts/ProfileInfo/ProfileInfo";
 import {TypePost} from "../../redux/store";
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
 
 type PropsType={
@@ -17,6 +17,6 @@ export function Profile (props:PropsType) {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts textarea={props.textarea}post={props.post} dispatch={props.dispatch} />
+            <MyPostsContainer textarea={props.textarea}post={props.post} dispatch={props.dispatch} />
         </div>)
 }

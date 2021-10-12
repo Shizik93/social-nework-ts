@@ -11,11 +11,10 @@ import Settings from "./components/Settings/Settings";
 
 import { Route } from "react-router-dom";
 import {reducersType} from "./redux/redux-store";
-
 type PropsType={
      state:reducersType
      dispatch:(action:any)=>void
-
+    store:any
  }
 
 function App(props:PropsType) {

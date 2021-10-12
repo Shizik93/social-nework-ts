@@ -1,25 +1,24 @@
 import m from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import {TypePost} from "../../../redux/store";
-import React from "react";
-import {AddPostAC, ChangeTextAC} from '../../../redux/profile-reducer';
+import React, {ChangeEvent} from "react";
+
 
 type PropsMyProfileType = {
     post: Array<TypePost>
-    dispatch: (action: any) => void
+    addPost:()=>void
+    onChangeTextArea:(e:ChangeEvent<HTMLTextAreaElement>)=>void,
     textarea: string
 }
 
 export function MyPosts(props: PropsMyProfileType) {
-    const onChangeTextArea = (e: any) => {
-        props.dispatch(ChangeTextAC(e.currentTarget.value))
+    const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.onChangeTextArea(e)
 
     }
 
     const addPost = () => {
-        props.dispatch(AddPostAC())
-
-
+        props.addPost()
     }
 
 
