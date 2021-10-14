@@ -3,18 +3,18 @@ import './App.css';
 import Dialogs from "./components/Dialogs/Dialogs";
 import {Header} from "./components/Header/Header";
 import {Nav} from "./components/Navbar/Nav";
-
 import {Profile} from "./components/Profile/Profile";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
-
 import { Route } from "react-router-dom";
-import {reducersType} from "./redux/redux-store";
+import {reducersType, RootType} from "./redux/redux-store";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+
 type PropsType={
      state:reducersType
      dispatch:(action:any)=>void
-    store:any
+     store:RootType
  }
 
 function App(props:PropsType) {
@@ -27,7 +27,7 @@ function App(props:PropsType) {
                 <div className='app-wrapper-content'>
 
 
-                    <Route path='/dialogs' render={() => <Dialogs newMessage={props.state.dialogsReducer.dialogsPage.newMessage} dialogs={props.state.dialogsReducer.dialogsPage.dialogs} messages={props.state.dialogsReducer.dialogsPage.messages} dispatch={props.dispatch}/>}/>
+                    <Route path='/dialogs' render={() =><DialogsContainer store={props.store}/>}/>
                     <Route path='/profile' render={() => <Profile  textarea={props.state.profileReducer.profilePage.textarea}post={props.state.profileReducer.profilePage.post} dispatch={props.dispatch}/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/news' render={() => <News/>}/>
