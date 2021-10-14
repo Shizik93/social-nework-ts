@@ -1,28 +1,30 @@
-
-import {TypePost} from "../../../redux/store";
 import React, {ChangeEvent} from "react";
-import {AddPostAC, ChangeTextAC} from '../../../redux/profile-reducer';
+import {AddPostAC, ChangeTextAC, TypePost} from '../../../redux/profile-reducer';
 import {MyPosts} from "./MyPosts";
+import {connect} from "react-redux";
+import {AppStateType} from "../../../redux/redux-store";
 
-type PropsMyProfileType = {
-    post: Array<TypePost>
-    dispatch: (action: any) => void
-    textarea: string
+type mapStateToPropsType={
+    post:Array<TypePost>
+    textarea:string
+
 }
-
-export function MyPostsContainer (props: PropsMyProfileType) {
-    const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(ChangeTextAC(e.currentTarget.value))
-
-    }
-    const addPost = () => {
-        props.dispatch(AddPostAC())
-
-
-    }
-
-    return (
-
-        <MyPosts post={props.post} addPost={addPost} onChangeTextArea={onChangeTextArea} textarea={props.textarea}/>
-    )
+const mapStateToProps = (state:AppStateType): mapStateToPropsType => {
+  return{
+      post:state.profileReducer.profilePage.post,
+      textarea:state.profileReducer.profilePage.textarea
+  }
 }
+const mapDispatchToProps = (dispatch:(action:any)=>void) => {
+    return{
+        addPost:() => {
+            dispatch(AddPostAC())
+    },
+        onChangeTextArea:(e: ChangeEvent<HTMLTextAreaElement>) => {
+            dispatch(ChangeTextAC(e.currentTarget.value))
+
+        }
+  
+}
+}
+export const MyPostsContainer=connect(mapStateToProps,mapDispatchToProps)(MyPosts)

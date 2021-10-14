@@ -1,4 +1,17 @@
-import {TypeDialogsPage} from "./store";
+
+export type TypeDialogs = {
+    id: number;
+    name: string
+}
+export type TypeMessage = {
+    message: string
+}
+
+export type TypeDialogsPage = {
+    newMessage: string
+    messages: Array<TypeMessage>
+    dialogs: Array<TypeDialogs>
+}
 export type initialDialogsStateType={dialogsPage: TypeDialogsPage}
 
 const initialState:initialDialogsStateType={dialogsPage: {

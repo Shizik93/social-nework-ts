@@ -1,13 +1,12 @@
 import m from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import {TypePost} from "../../../redux/store";
 import React, {ChangeEvent} from "react";
-
+import {TypePost} from "../../../redux/profile-reducer";
 
 type PropsMyProfileType = {
     post: Array<TypePost>
-    addPost:()=>void
-    onChangeTextArea:(e:ChangeEvent<HTMLTextAreaElement>)=>void,
+    addPost: () => void
+    onChangeTextArea: (e: ChangeEvent<HTMLTextAreaElement>) => void,
     textarea: string
 }
 
@@ -20,7 +19,6 @@ export function MyPosts(props: PropsMyProfileType) {
     const addPost = () => {
         props.addPost()
     }
-
 
     const postsElement =
         props.post.map(p => <Post message={p.message} like={p.like}/>)

@@ -1,8 +1,5 @@
 import React from "react";
-
 import m from './ProfileInfo.module.css'
-
-
 
 function ProfileInfo () {
   return (

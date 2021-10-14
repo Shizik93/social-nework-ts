@@ -1,10 +1,7 @@
 import React from "react";
 
 import m from './Post.module.css'
-import {TypePost} from "../../../../redux/store";
-
-
-
+import {TypePost} from "../../../../redux/profile-reducer";
 
 export function Post(props:TypePost) {
     return (

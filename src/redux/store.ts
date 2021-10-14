@@ -1,39 +1,4 @@
 
-export type TypeDialogs = {
-    id: number;
-    name: string
-}
-export type TypeMessage = {
-    message: string
-}
-export type TypePost = {
-    message: string;
-    like: number
-}
-export type TypeDialogsPage = {
-    newMessage: string
-    messages: Array<TypeMessage>
-    dialogs: Array<TypeDialogs>
-}
-export type TypeProfilePage = {
-    textarea: string
-    post: Array<TypePost>
-}
-export type TypeRootState = {
-    profilePage: TypeProfilePage;
-    dialogsPage: TypeDialogsPage
-
-}
-export type storeType={
-    _state:TypeRootState,
-    _callSubscriber:(_state?: TypeRootState)=>void,
-    getState:()=>TypeRootState,
-    subscribe:(observer:()=>void)=>void
-    dispatch:(action:any)=>void
-
-}
-
-/*
 let store: any = {
     _state: {
         profilePage: {
@@ -61,7 +26,7 @@ let store: any = {
         },
 
     },
-    _callSubscriber(_state?: TypeRootState) {
+/*    _callSubscriber(_state?: TypeRootState) {
     },
 
     getState() {
@@ -75,7 +40,7 @@ let store: any = {
         this._state.profilePage=profileReducer(this._state.profilePage,action)
           this._state.dialogsPage=dialogsReducer(this._state.dialogsPage,action)
 this._callSubscriber(this._state)
-    }
+    }*/
 }
 
-export default store*/
+export default store
