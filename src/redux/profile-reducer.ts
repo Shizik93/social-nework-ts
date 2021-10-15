@@ -1,4 +1,5 @@
 export type TypePost = {
+    id:number
     message: string;
     like: number
 }
@@ -7,17 +8,14 @@ export type TypeProfilePage = {
     post: Array<TypePost>
 }
 
-export type initialProfileStateType = {
-    profilePage: TypeProfilePage
-}
+export type initialProfileStateType = TypeProfilePage
+
 
 let initialState: initialProfileStateType = {
-    profilePage: {
-        textarea: '',
-        post: [
-            {message: 'Hi,how are you?', like: 12},
-            {message: 'It is my first post', like: 11}]
-    }
+    textarea: '',
+    post: [
+        {id:1,message: 'Hi,how are you?', like: 12},
+        {id:2,message: 'It is my first post', like: 11}]
 }
 
 
@@ -26,24 +24,10 @@ export type profileReducerType = ChangeTextAction | AddPostAction
 export const profileReducer = (state: initialProfileStateType = initialState, action: profileReducerType): initialProfileStateType => {
     switch (action.type) {
         case 'ADD-POST': {
-            let newState={...state}
-
-            let newPost = {
-                id: 5,
-                message: newState.profilePage.textarea,
-                like: 0
-            }
-            newState.profilePage={...state.profilePage}
-            newState.profilePage.post=[...state.profilePage.post]
-            newState.profilePage.post.push(newPost)
-            newState.profilePage.textarea = ''
-            return newState
+            return {...state,textarea:'',post:[...state.post,{id:11,message:state.textarea,like: 0}]}
         }
         case 'CHANGE-TEXT': {
-            let newState={...state}
-            newState.profilePage={...state.profilePage}
-            newState.profilePage.textarea = action.value
-            return newState
+            return {...state,textarea:action.value}
         }
         default:
             return state

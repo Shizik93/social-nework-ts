@@ -21,7 +21,7 @@ export function MyPosts(props: PropsMyProfileType) {
     }
 
     const postsElement =
-        props.post.map(p => <Post message={p.message} like={p.like}/>)
+        props.post.map(p => <Post id={p.id} message={p.message} like={p.like}/>)
     return (
         <div className={m.myPosts}>
             <h3>My Posts</h3>
@@ -34,7 +34,6 @@ export function MyPosts(props: PropsMyProfileType) {
             </div>
             <div className={m.posts}>
                 {postsElement}
-
             </div>
         </div>
 

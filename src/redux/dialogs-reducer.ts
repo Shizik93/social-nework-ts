@@ -12,9 +12,9 @@ export type TypeDialogsPage = {
     messages: Array<TypeMessage>
     dialogs: Array<TypeDialogs>
 }
-export type initialDialogsStateType={dialogsPage: TypeDialogsPage}
+export type initialDialogsStateType=TypeDialogsPage
 
-const initialState:initialDialogsStateType={dialogsPage: {
+const initialState:initialDialogsStateType={
         newMessage: '',
         messages: [
             {message: 'Hi'},
@@ -30,25 +30,16 @@ const initialState:initialDialogsStateType={dialogsPage: {
             {id: 6, name: 'Valera'},
         ]
 
-    }}
+    }
 
 export type dialogsReducerType=ChangeNewMessageAction|SendMessageActionType
 export const dialogsReducer = (state:initialDialogsStateType=initialState, action: dialogsReducerType):initialDialogsStateType => {
     switch (action.type) {
         case 'CHANGE-NEW-MESSAGE': {
-            let newState={...state}
-            newState.dialogsPage={...state.dialogsPage}
-            newState.dialogsPage.newMessage=action.newMessage
-            return newState
+            return {...state,newMessage:action.newMessage}
         }
         case 'SEND-MESSAGE': {
-            let newState={...state}
-            newState.dialogsPage={...state.dialogsPage}
-            newState.dialogsPage.messages=[...state.dialogsPage.messages]
-            newState.dialogsPage.messages.push({message: state.dialogsPage.newMessage})
-            newState.dialogsPage.newMessage = ''
-            return newState
-
+            return{...state,newMessage:'',messages:[...state.messages,{message: state.newMessage}]}
         }
         default:return state
     }

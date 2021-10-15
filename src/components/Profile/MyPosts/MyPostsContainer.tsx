@@ -11,8 +11,8 @@ type mapStateToPropsType={
 }
 const mapStateToProps = (state:AppStateType): mapStateToPropsType => {
   return{
-      post:state.profileReducer.profilePage.post,
-      textarea:state.profileReducer.profilePage.textarea
+      post:state.profileReducer.post,
+      textarea:state.profileReducer.textarea
   }
 }
 const mapDispatchToProps = (dispatch:(action:profileReducerType)=>void) => {
