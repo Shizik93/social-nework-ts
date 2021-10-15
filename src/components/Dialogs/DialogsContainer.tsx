@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from "react";
-import {ChangeNewMessageAC, SendMessageAC} from "../../redux/dialogs-reducer";
+import {ChangeNewMessageAC, dialogsReducerType, SendMessageAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
@@ -9,7 +9,7 @@ let mapStateToProps = (state: AppStateType) => {
         state: state.dialogsReducer.dialogsPage
     }
 }
-let mapDispatchToProps = (dispatch: (action: any) => void) => {
+let mapDispatchToProps = (dispatch: (action: dialogsReducerType) => void) => {
     return {
         AddNewMessage: () => {
             dispatch(SendMessageAC())

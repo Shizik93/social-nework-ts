@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from "react";
-import {AddPostAC, ChangeTextAC, TypePost} from '../../../redux/profile-reducer';
+import {AddPostAC, ChangeTextAC, profileReducerType, TypePost} from '../../../redux/profile-reducer';
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/redux-store";
@@ -15,7 +15,7 @@ const mapStateToProps = (state:AppStateType): mapStateToPropsType => {
       textarea:state.profileReducer.profilePage.textarea
   }
 }
-const mapDispatchToProps = (dispatch:(action:any)=>void) => {
+const mapDispatchToProps = (dispatch:(action:profileReducerType)=>void) => {
     return{
         addPost:() => {
             dispatch(AddPostAC())

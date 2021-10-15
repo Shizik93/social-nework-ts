@@ -26,19 +26,24 @@ export type profileReducerType = ChangeTextAction | AddPostAction
 export const profileReducer = (state: initialProfileStateType = initialState, action: profileReducerType): initialProfileStateType => {
     switch (action.type) {
         case 'ADD-POST': {
+            let newState={...state}
+
             let newPost = {
                 id: 5,
-                message: state.profilePage.textarea,
+                message: newState.profilePage.textarea,
                 like: 0
-
             }
-            state.profilePage.post.push(newPost)
-            state.profilePage.textarea = ''
-            return state
+            newState.profilePage={...state.profilePage}
+            newState.profilePage.post=[...state.profilePage.post]
+            newState.profilePage.post.push(newPost)
+            newState.profilePage.textarea = ''
+            return newState
         }
         case 'CHANGE-TEXT': {
-            state.profilePage.textarea = action.value
-            return state
+            let newState={...state}
+            newState.profilePage={...state.profilePage}
+            newState.profilePage.textarea = action.value
+            return newState
         }
         default:
             return state

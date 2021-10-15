@@ -36,13 +36,18 @@ export type dialogsReducerType=ChangeNewMessageAction|SendMessageActionType
 export const dialogsReducer = (state:initialDialogsStateType=initialState, action: dialogsReducerType):initialDialogsStateType => {
     switch (action.type) {
         case 'CHANGE-NEW-MESSAGE': {
-            state.dialogsPage.newMessage = action.newMessage
-            return state
+            let newState={...state}
+            newState.dialogsPage={...state.dialogsPage}
+            newState.dialogsPage.newMessage=action.newMessage
+            return newState
         }
         case 'SEND-MESSAGE': {
-            state.dialogsPage.messages.push({message: state.dialogsPage.newMessage})
-            state.dialogsPage.newMessage = ''
-            return state
+            let newState={...state}
+            newState.dialogsPage={...state.dialogsPage}
+            newState.dialogsPage.messages=[...state.dialogsPage.messages]
+            newState.dialogsPage.messages.push({message: state.dialogsPage.newMessage})
+            newState.dialogsPage.newMessage = ''
+            return newState
 
         }
         default:return state
