@@ -1,6 +1,7 @@
+import { v1 } from "uuid"
 
 export type TypeDialogs = {
-    id: number;
+    id: string;
     name: string
 }
 export type TypeMessage = {
@@ -22,12 +23,12 @@ const initialState:initialDialogsStateType={
             {message: 'Yo'}
         ],
         dialogs: [
-            {id: 1, name: 'Dimych'},
-            {id: 2, name: 'Andrey'},
-            {id: 3, name: 'Sveta'},
-            {id: 4, name: 'Sasha'},
-            {id: 5, name: 'Victor'},
-            {id: 6, name: 'Valera'},
+            {id: v1(), name: 'Dimych'},
+            {id: v1(), name: 'Andrey'},
+            {id: v1(), name: 'Sveta'},
+            {id: v1(), name: 'Sasha'},
+            {id: v1(), name: 'Victor'},
+            {id: v1(), name: 'Valera'},
         ]
 
     }

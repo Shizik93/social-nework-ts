@@ -2,11 +2,13 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 import m from './Nav.module.css'
 
-export function Nav () {
+export function Nav() {
 
     return (
         <nav className={m.nav}>
-
+            <div className={`${m.item} ${m.active}`}>
+                <NavLink to='/users' activeClassName={m.active}>Users</NavLink>
+            </div>
             <div className={`${m.item} ${m.active}`}>
                 <NavLink to='/profile' activeClassName={m.active}>Profile</NavLink>
             </div>
