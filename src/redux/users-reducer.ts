@@ -1,4 +1,3 @@
-import {v1} from "uuid"
 
 export type initialUsersStateType = {
     users: Array<usersType>
@@ -16,32 +15,7 @@ type locationType = {
     city: string
 }
 let initialState: initialUsersStateType = {
-    users: [
-        {
-            id: v1(),
-            photoUrl: 'https://telemetr.me/photos/9b9c2f98bbcaa5a43b89b317280d6b26.jpg',
-            fullName: 'Dmitry',
-            following: true,
-            status: 'Hello World from Belarus!',
-            location: {country: 'Belarus', city: 'Minsk'}
-        },
-        {
-            id: v1(),
-            photoUrl: 'https://telemetr.me/photos/9b9c2f98bbcaa5a43b89b317280d6b26.jpg',
-            fullName: 'Andrey',
-            following: true,
-            status: 'Hello World from Ukraine!',
-            location: {country: 'Ukraine', city: 'Kiev'}
-        },
-        {
-            id: v1(),
-            photoUrl: 'https://telemetr.me/photos/9b9c2f98bbcaa5a43b89b317280d6b26.jpg',
-            fullName: 'Viktor',
-            following: false,
-            status: 'Hello Worls from Russia',
-            location: {country: 'Russia', city: 'Moscow'}
-        },
-    ]
+    users: []
 
 }
 
