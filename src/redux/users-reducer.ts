@@ -1,34 +1,23 @@
+import {UserType} from "../components/Users/Users";
 
 export type initialUsersStateType = {
-    users: Array<usersType>
+    users: Array<UserType>
 }
-export type usersType = {
-    id: string,
-    photoUrl: string,
-    fullName: string,
-    status: string,
-    following: boolean,
-    location: locationType
-}
-type locationType = {
-    country: string,
-    city: string
-}
+
 let initialState: initialUsersStateType = {
     users: []
 
 }
-
 
 export type usersReducerType = FollowType | UnFollow | SetUsersType
 
 export const usersReducer = (state: initialUsersStateType = initialState, action: usersReducerType): initialUsersStateType => {
     switch (action.type) {
         case 'FOLLOW-USER': {
-            return {...state, users: state.users.map(u => u.id === action.id ? {...u, following: true} : u)}
+            return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: true} : u)}
         }
         case 'UNFOLLOW-USER': {
-            return {...state, users: state.users.map(u => u.id === action.id ? {...u, following: false} : u)}
+            return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: false} : u)}
         }
         case "SET-USERS": {
             return {...state, users: [...state.users, ...action.users]}
@@ -43,7 +32,7 @@ export const usersReducer = (state: initialUsersStateType = initialState, action
 
 }
 export type FollowType = ReturnType<typeof Follow>
-export const Follow = (id: string) => {
+export const Follow = (id: number) => {
     return {
         type: 'FOLLOW-USER',
         id,
@@ -51,7 +40,7 @@ export const Follow = (id: string) => {
     } as const
 }
 export type UnFollow = ReturnType<typeof UnFollow>
-export const UnFollow = (id: string) => {
+export const UnFollow = (id: number) => {
     return {
         type: 'UNFOLLOW-USER',
         id,
@@ -59,7 +48,7 @@ export const UnFollow = (id: string) => {
     } as const
 }
 export type SetUsersType = ReturnType<typeof SetUsers>
-export const SetUsers = (users: any) => {
+export const SetUsers = (users: Array<UserType>) => {
     return {
         type: 'SET-USERS',
         users,
