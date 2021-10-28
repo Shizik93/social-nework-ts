@@ -5,6 +5,7 @@ export type initialUsersStateType = {
     pageSize: number,
     totalUsersCount: number
     currentPage: number
+    isLoading:boolean
 }
 
 let initialState: initialUsersStateType = {
@@ -12,10 +13,11 @@ let initialState: initialUsersStateType = {
     pageSize: 10,
     totalUsersCount: 20,
     currentPage: 1,
+    isLoading:false
 
 }
 
-export type usersReducerType = FollowType | UnFollow | SetUsersType | SetCurrentPageType | SetTotalUsersCountType
+export type usersReducerType = FollowType | UnFollow | SetUsersType | SetCurrentPageType | SetTotalUsersCountType|SetIsLoadingType
 
 export const usersReducer = (state: initialUsersStateType = initialState, action: usersReducerType): initialUsersStateType => {
     switch (action.type) {
@@ -33,6 +35,9 @@ export const usersReducer = (state: initialUsersStateType = initialState, action
         }
         case "SET-TOTAL-USERS-COUNT": {
             return {...state, totalUsersCount: action.totalUsersCount}
+        }
+    case "TOGGLE-IS-LOADING": {
+            return {...state, isLoading: action.boolean}
         }
 
 
@@ -79,6 +84,14 @@ export const SetTotalUsersCount = (totalUsersCount: number) => {
     return {
         type: "SET-TOTAL-USERS-COUNT",
         totalUsersCount
+    } as const
+
+}
+export type SetIsLoadingType = ReturnType<typeof SetIsLoading>
+export const SetIsLoading = (boolean: boolean) => {
+    return {
+        type: "TOGGLE-IS-LOADING",
+        boolean
     } as const
 
 }
