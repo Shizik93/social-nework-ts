@@ -1,12 +1,16 @@
 import React from "react";
-import axios from 'axios'
+
+import m from "./users.module.css";
+import img from "./userImg.png";
 
 
 type usersPropsType = {
     users: Array<UserType>,
     Follow: (id: number) => void,
     UnFollow: (id: number) => void,
-    SetUsers: (users: any) => void,
+    currentPage: number
+    onPageChanged: (pageNumber: number) => void
+    pages: number[]
 }
 export type UserType = {
     name: string
@@ -20,37 +24,32 @@ export type UserType = {
     followed: boolean
 }
 
-type DataType = {
-    error: null | string
-    totalCount: number
-    items: Array<UserType>
-}
-
 export function Users(props: usersPropsType) {
 
 
-    if (props.users.length===0){
-        axios.get<DataType>('https://social-network.samuraijs.com/api/1.0/users').then(responce=>{
-            props.SetUsers(responce.data.items)
-        })
-
-    }
-
     return (
         <>
-            {props.users.map(f => <div key={f.id}>
-
+            <div>
+                {props.pages.map(f =>
+                    <span className={`${props.currentPage === f && m.selectedPage}`}
+                          onClick={() => {
+                              props.onPageChanged(f)
+                          }}>{f} </span>)}
+            </div>
+            {props.users.map(f =>
+                <div key={f.id}>
+                    <div><
+                        img className={m.photo} src={f.photos.small !== null ? f.photos.small : img}/>
+                    </div>
                     <div>{f.name}</div>
                     <div>{f.status}</div>
-                    {f.followed ? <button onClick={() => props.UnFollow(f.id)}>Unfollow</button> :
+                    {f.followed ?
+                        <button onClick={() => props.UnFollow(f.id)}>Unfollow</button> :
                         <button onClick={() => props.Follow(f.id)}>Follow</button>}
 
 
                 </div>)
             }
-            <button onClick={()=>{axios.get<DataType>('https://social-network.samuraijs.com/api/1.0/users').then(responce=>{
-                props.SetUsers(responce.data.items)
-            })}}>Set Users</button>
 
         </>
 
