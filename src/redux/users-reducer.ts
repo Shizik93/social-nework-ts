@@ -1,15 +1,21 @@
 import {UserType} from "../components/Users/Users";
 
 export type initialUsersStateType = {
-    users: Array<UserType>
+    users: Array<UserType>,
+    pageSize: number,
+    totalUsersCount: number
+    currentPage: number
 }
 
 let initialState: initialUsersStateType = {
-    users: []
+    users: [],
+    pageSize: 10,
+    totalUsersCount: 20,
+    currentPage: 1,
 
 }
 
-export type usersReducerType = FollowType | UnFollow | SetUsersType
+export type usersReducerType = FollowType | UnFollow | SetUsersType | SetCurrentPageType | SetTotalUsersCountType
 
 export const usersReducer = (state: initialUsersStateType = initialState, action: usersReducerType): initialUsersStateType => {
     switch (action.type) {
@@ -20,7 +26,13 @@ export const usersReducer = (state: initialUsersStateType = initialState, action
             return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: false} : u)}
         }
         case "SET-USERS": {
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: [...action.users]}
+        }
+        case "SET-CURRENT-PAGE": {
+            return {...state, currentPage: action.currentPage}
+        }
+        case "SET-TOTAL-USERS-COUNT": {
+            return {...state, totalUsersCount: action.totalUsersCount}
         }
 
 
@@ -52,6 +64,21 @@ export const SetUsers = (users: Array<UserType>) => {
     return {
         type: 'SET-USERS',
         users,
+    } as const
+}
+export type SetCurrentPageType = ReturnType<typeof SetCurrentPage>
+export const SetCurrentPage = (currentPage: number) => {
+    return {
+        type: "SET-CURRENT-PAGE",
+        currentPage
+    } as const
+
+}
+export type SetTotalUsersCountType = ReturnType<typeof SetTotalUsersCount>
+export const SetTotalUsersCount = (totalUsersCount: number) => {
+    return {
+        type: "SET-TOTAL-USERS-COUNT",
+        totalUsersCount
     } as const
 
 }
