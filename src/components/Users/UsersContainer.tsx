@@ -2,10 +2,9 @@ import {connect} from "react-redux";
 import {Users} from "./Users";
 import {AppStateType} from "../../redux/redux-store";
 import {Follow, SetCurrentPage, SetIsLoading, SetTotalUsersCount, SetUsers, UnFollow,} from "../../redux/users-reducer";
-import preloader from "../../assets/images/__Iphone-spinner-1.gif";
-
 import React from "react";
 import axios from "axios";
+import {Preloader} from "../common/preloader/preloader";
 
 type usersPropsType = {
     users: Array<UserType>,
@@ -69,7 +68,7 @@ export class UsersClass extends React.Component <usersPropsType> {
         }
         return (<>
                 <div>
-                    {this.props.isLoading?<img src={preloader}/>:null}
+                    {this.props.isLoading?<Preloader/>:null}
                 </div>
                 <Users users={this.props.users}
                        Follow={this.props.Follow}
