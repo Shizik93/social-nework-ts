@@ -2,6 +2,7 @@ import React from "react";
 
 import m from "./users.module.css";
 import img from "./userImg.png";
+import { NavLink } from "react-router-dom";
 
 
 type usersPropsType = {
@@ -38,8 +39,8 @@ export function Users(props: usersPropsType) {
             </div>
             {props.users.map(f =>
                 <div key={f.id}>
-                    <div><
-                        img className={m.photo} src={f.photos.small !== null ? f.photos.small : img}/>
+                    <div>
+                    <NavLink to={'/profile/'+f.id}> <img className={m.photo} src={f.photos.small !== null ? f.photos.small : img}/></NavLink>
                     </div>
                     <div>{f.name}</div>
                     <div>{f.status}</div>
