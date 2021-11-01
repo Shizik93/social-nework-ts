@@ -1,7 +1,14 @@
 import {connect} from "react-redux";
 import {Users} from "./Users";
 import {AppStateType} from "../../redux/redux-store";
-import {Follow, SetCurrentPage, SetTotalUsersCount, SetUsers, UnFollow,} from "../../redux/users-reducer";
+import {
+    Subscribe,
+    SetCurrentPage,
+    SetTotalUsersCount,
+    SetUsers,
+    UnSubscribe,
+    SetIsSubscribe,
+} from "../../redux/users-reducer";
 
 import React from "react";
 import {usersAPI} from "../../api/api";
@@ -11,14 +18,16 @@ import {usersAPI} from "../../api/api";
 
 type usersPropsType = {
     users: Array<UserType>,
-    Follow: (id: number) => void,
-    UnFollow: (id: number) => void,
+    Subscribe: (id: number) => void,
+    UnSubscribe: (id: number) => void,
     SetUsers: (users: any) => void,
     pageSize: number,
     totalUsersCount: number,
     currentPage: number
     SetCurrentPage: (currentPage: number) => void
     SetTotalUsersCount: (totalUsersCount: number) => void
+    SetIsSubscribe:(boolean: boolean,id:number)=>void
+    subscribeUsers:Array<number>
 }
 export type UserType = {
     name: string
@@ -71,11 +80,13 @@ export class UsersClass extends React.Component <usersPropsType> {
         }
         return (
             <Users users={this.props.users}
-                   Follow={this.props.Follow}
-                   UnFollow={this.props.UnFollow}
+                   Subscribe={this.props.Subscribe}
+                   UnSubscribe={this.props.UnSubscribe}
                    currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
-                   pages={pages}/>
+                   pages={pages}
+                   SetIsSubscribe={this.props.SetIsSubscribe}
+                   subscribeUsers={this.props.subscribeUsers}/>
 
         )
     }
@@ -83,32 +94,22 @@ export class UsersClass extends React.Component <usersPropsType> {
 
 const mapStateToProps = (state: AppStateType) => {
     return {
+        //@ts-ignore
+        subscribeUsers:state.usersReducer.subscribeUsers,
         users: state.usersReducer.users,
         pageSize: state.usersReducer.pageSize,
         totalUsersCount: state.usersReducer.totalUsersCount,
         currentPage: state.usersReducer.currentPage,
     }
 }
-const mapDispatchToProps = (dispatch: (action: any) => void) => {
-    return {
-        Follow: (id: number) => {
-            dispatch(Follow(id))
-        },
-        UnFollow: (id: number) => {
-            dispatch(UnFollow(id))
-        },
-        SetUsers: (users: Array<UserType>) => {
-            dispatch(SetUsers(users))
-        },
-        SetCurrentPage: (currentPage: number) => {
-            dispatch(SetCurrentPage(currentPage))
-        },
-        SetTotalUsersCount:(totalUsersCount:number)=>{
-            dispatch(SetTotalUsersCount(totalUsersCount))
-        }
-    }
-
-}
 
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersClass)
+
+export const UsersContainer = connect(mapStateToProps,
+    {
+        SetIsSubscribe,
+        Subscribe,
+        UnSubscribe,
+        SetUsers,
+        SetCurrentPage,
+        SetTotalUsersCount})(UsersClass)

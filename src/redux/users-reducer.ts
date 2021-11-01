@@ -14,7 +14,8 @@ export type initialUsersStateType = {
     pageSize: number,
     totalUsersCount: number
     currentPage: number
-    isLoading:boolean
+    isLoading:boolean,
+    subscribeUsers:Array<number>
 }
 
 let initialState: initialUsersStateType = {
@@ -22,18 +23,19 @@ let initialState: initialUsersStateType = {
     pageSize: 10,
     totalUsersCount: 20,
     currentPage: 1,
-    isLoading:false
+    isLoading:false,
+    subscribeUsers:[]
 
 }
 
-export type usersReducerType = FollowType | UnFollow | SetUsersType | SetCurrentPageType | SetTotalUsersCountType|SetIsLoadingType
+export type usersReducerType = FollowType | UnFollow | SetUsersType | SetCurrentPageType | SetTotalUsersCountType|SetIsLoadingType|SetIsSubscribeType
 
 export const usersReducer = (state: initialUsersStateType = initialState, action: usersReducerType): initialUsersStateType => {
     switch (action.type) {
-        case 'FOLLOW-USER': {
+        case 'SUBSCRIBE-USER': {
             return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: true} : u)}
         }
-        case 'UNFOLLOW-USER': {
+        case 'UNSUBSCRIBE-USER': {
             return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: false} : u)}
         }
         case "SET-USERS": {
@@ -46,8 +48,11 @@ export const usersReducer = (state: initialUsersStateType = initialState, action
         case "SET-TOTAL-USERS-COUNT": {
             return {...state, totalUsersCount: action.totalUsersCount}
         }
-    case "TOGGLE-IS-LOADING": {
+         case "TOGGLE-IS-LOADING": {
             return {...state, isLoading: action.boolean}
+        }
+        case "TOGGLE-IS-SUBSCRIBE": {
+            return {...state,subscribeUsers:action.boolean?[...state.subscribeUsers,action.id]:state.subscribeUsers.filter(id=>id!==action.id)}
         }
 
 
@@ -58,18 +63,18 @@ export const usersReducer = (state: initialUsersStateType = initialState, action
 
 
 }
-export type FollowType = ReturnType<typeof Follow>
-export const Follow = (id: number) => {
+export type FollowType = ReturnType<typeof Subscribe>
+export const Subscribe = (id: number) => {
     return {
-        type: 'FOLLOW-USER',
+        type: 'SUBSCRIBE-USER',
         id,
 
     } as const
 }
-export type UnFollow = ReturnType<typeof UnFollow>
-export const UnFollow = (id: number) => {
+export type UnFollow = ReturnType<typeof UnSubscribe>
+export const UnSubscribe = (id: number) => {
     return {
-        type: 'UNFOLLOW-USER',
+        type: 'UNSUBSCRIBE-USER',
         id,
 
     } as const
@@ -102,6 +107,15 @@ export const SetIsLoading = (boolean: boolean) => {
     return {
         type: "TOGGLE-IS-LOADING",
         boolean
+    } as const
+
+}
+export type SetIsSubscribeType = ReturnType<typeof SetIsSubscribe>
+export const SetIsSubscribe = (boolean: boolean,id:number) => {
+    return {
+        type: "TOGGLE-IS-SUBSCRIBE",
+        boolean,
+        id,
     } as const
 
 }

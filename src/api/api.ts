@@ -1,8 +1,9 @@
 import axios from "axios";
-type followType={
+
+type subscribeType = {
 
     resultCode: number
-    messages:[],
+    messages: [],
     data: object
 }
 type DataType = {
@@ -10,7 +11,7 @@ type DataType = {
     totalCount: number
     items: Array<UserType>
 }
-type AuthResponceType = {
+type AuthResponseType = {
     data: {
         id: number,
         login: string,
@@ -54,60 +55,70 @@ export type UserType = {
     followed: boolean
 }
 
-export const usersAPI={
-    getUsers(currentPage: number, pageSize: number){
-        return axios.get<DataType>(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`)
-            .then(responce => {
-                return responce.data
+const instance = axios.create({
+    baseURL: `https://social-network.samuraijs.com/api/1.0/`,
+    withCredentials: true,
+    headers: {
+        'API-KEY': 'a9f5b347-68da-4301-888d-541b1ac92546'
+        }
+    }
+)
+const instancePost=axios.create({
+    baseURL:`https://social-network.samuraijs.com/api/1.0/`,
+    data:{},
+    withCredentials: true,
+    headers: {
+            'API-KEY': 'a9f5b347-68da-4301-888d-541b1ac92546'
+        }
+   } )
+
+export const usersAPI = {
+    getUsers(currentPage: number, pageSize: number) {
+        return instance.get<DataType>(`users?page=${currentPage}&count=${pageSize}`)
+            .then(response => {
+                return response.data
             })
     },
-    onPageChanged(pageNumber: number, pageSize: number){
+    onPageChanged(pageNumber: number, pageSize: number) {
 
         {
-            return axios.get<DataType>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${pageSize}`)
-                .then(responce => {
-                    return responce.data
+            return instance.get<DataType>(`users?page=${pageNumber}&count=${pageSize}`)
+                .then(response => {
+                    return response.data
 
 
                 })
         }
 
     },
-    deleteFollow (id:number){
-        return  axios.delete<followType>(`https://social-network.samuraijs.com/api/1.0/follow/${id}`,
-            {withCredentials: true,
-                headers:{
-                    'API-KEY':'a9f5b347-68da-4301-888d-541b1ac92546'
-                }}).then(responce=>{
-            return responce.data.resultCode
+    deleteSubscribe(id: number) {
+        return instance.delete<subscribeType>(`follow/${id}`,
+         ).then(response => {
+            return response.data.resultCode
         })
 
     },
-    postFollow(id:number){
-        return axios.post<followType>(`https://social-network.samuraijs.com/api/1.0/follow/${id}`,
-            {},
-            {withCredentials: true,
-                headers:{
-                    'API-KEY':'a9f5b347-68da-4301-888d-541b1ac92546'
-                }})  .then(responce=>{
-            return responce.data.resultCode
+    postSubscribe(id: number) {
+        return instancePost.post<subscribeType>(`follow/${id}`).then(response => {
+            return response.data.resultCode
         })
 
     }
 }
 
-export const authAPI={
-    login(){
-        return axios.get<AuthResponceType>(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true}).then(responce => {
-            return responce.data
+export const authAPI = {
+    login() {
+        return instance.get<AuthResponseType>(`auth/me`).then(response => {
+            return response.data
         })
-},
+    },
 }
 
-export const profileAPI={
-    getUserProfile(userId: string){
-        return axios.get<ProfileUsersType>('https://social-network.samuraijs.com/api/1.0/profile/' + userId).then(responce => {
-                return responce.data
+export const profileAPI = {
+    getUserProfile(userId: string) {
+        return instance.get<ProfileUsersType>('profile/' + userId)
+            .then(response => {
+                return response.data
             }
         )
 
