@@ -4,7 +4,10 @@ import {AppStateType} from "../../redux/redux-store";
 import {Follow, SetCurrentPage, SetTotalUsersCount, SetUsers, UnFollow,} from "../../redux/users-reducer";
 
 import React from "react";
-import axios from "axios";
+import {usersAPI} from "../../api/api";
+
+
+
 
 type usersPropsType = {
     users: Array<UserType>,
@@ -36,18 +39,24 @@ type DataType = {
 }
 
 export class UsersClass extends React.Component <usersPropsType> {
+
     componentDidMount() {
-        axios.get<DataType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(responce => {
-            this.props.SetUsers(responce.data.items)
-            this.props.SetTotalUsersCount(responce.data.totalCount)
+        usersAPI.getUsers(this.props.currentPage,this.props.pageSize).then(data=>{
+            this.props.SetUsers(data.items)
+            this.props.SetTotalUsersCount(data.totalCount)
         })
+
+
+
+
     }
+
 
     onPageChanged = (pageNumber: number) => {
         this.props.SetCurrentPage(pageNumber)
         {
-            axios.get<DataType>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(responce => {
-                this.props.SetUsers(responce.data.items)
+            usersAPI.onPageChanged(pageNumber,this.props.pageSize).then(data => {
+                this.props.SetUsers(data.items)
 
             })
         }

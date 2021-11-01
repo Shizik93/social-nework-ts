@@ -1,5 +1,14 @@
-import {UserType} from "../components/Users/Users";
-
+export type UserType = {
+    name: string
+    id: number
+    uniqueUrlName: null | string
+    photos: {
+        small: null | string
+        large: null | string
+    }
+    status: null | string
+    followed: boolean
+}
 export type initialUsersStateType = {
     users: Array<UserType>,
     pageSize: number,
@@ -28,6 +37,7 @@ export const usersReducer = (state: initialUsersStateType = initialState, action
             return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: false} : u)}
         }
         case "SET-USERS": {
+
             return {...state, users: [...action.users]}
         }
         case "SET-CURRENT-PAGE": {

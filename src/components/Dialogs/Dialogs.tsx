@@ -15,12 +15,11 @@ type DialogsPropsType = {
 function Dialogs(props: DialogsPropsType) {
     const ChangeNewMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.ChangeNewMessage(e)
-        /*    props.dispatch(ChangeNewMessageAC(e.currentTarget.value))*/
 
     }
     const AddNewMessage = () => {
         props.AddNewMessage()
-        /*props.dispatch(SendMessageAC())*/
+
 
 
     }
