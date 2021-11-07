@@ -4,15 +4,20 @@ import m from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import { TypeDialogsPage } from "../../redux/dialogs-reducer";
+import {Redirect} from "react-router-dom";
+
 
 
 type DialogsPropsType = {
     ChangeNewMessage: (e: ChangeEvent<HTMLTextAreaElement>) => void
     AddNewMessage: () => void
     state: TypeDialogsPage
+    isAuth:boolean
 }
 
 function Dialogs(props: DialogsPropsType) {
+    if(!props.isAuth){return <Redirect to={'/login'}/>}
+
     const ChangeNewMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.ChangeNewMessage(e)
 

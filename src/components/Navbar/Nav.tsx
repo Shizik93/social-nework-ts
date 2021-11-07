@@ -25,6 +25,9 @@ export function Nav() {
                 <NavLink to='/settings' activeClassName={m.active}>Settings</NavLink>
             </div>
 
+
+
+
         </nav>
     )
 }
