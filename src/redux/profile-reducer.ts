@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {profileAPI} from "../api/api";
 type ProfileUsersType={
 
     aboutMe:string,
@@ -79,4 +80,10 @@ export const setUserProfile = (profile:ProfileUsersType) => {
         type: 'SET-PROFILE-USER',
         profile
     } as const
+}
+export const getUserProfile = (userId: string) => (dispatch:any)=>{
+    profileAPI.getUserProfile(userId).then(data => {
+        dispatch(setUserProfile(data))
+    })
+
 }

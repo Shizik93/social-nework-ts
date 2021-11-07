@@ -1,3 +1,5 @@
+import {usersAPI} from "../api/api";
+
 export type UserType = {
     name: string
     id: number
@@ -117,5 +119,37 @@ export const SetIsSubscribe = (boolean: boolean,id:number) => {
         boolean,
         id,
     } as const
+
+}
+export const getUsersThunkCreator =(currentPage:number,pageSize:number)=> (dispatch:any) => {
+
+    dispatch(SetIsLoading(true))
+    usersAPI.getUsers(currentPage,pageSize).then(data=>{
+        dispatch(SetIsLoading(false))
+        dispatch(SetUsers(data.items))
+        dispatch(SetTotalUsersCount(data.totalCount))
+    })
+
+}
+export const SetSubscribe=(id:number)=>(dispatch:any)=>{
+    dispatch(SetIsSubscribe(true,id))
+    usersAPI.deleteSubscribe(id).then(resultCode => {
+        if(resultCode===0){
+            dispatch(UnSubscribe(id))
+            dispatch(SetIsSubscribe(false,id))
+        }
+
+    })
+
+}
+export const SetUnsubscribe=(id:number)=>(dispatch:any)=>{
+    dispatch (SetIsSubscribe(true,id))
+    usersAPI.postSubscribe(id).then(resultCode => {
+        if(resultCode===0){
+           dispatch(Subscribe(id))
+            dispatch(SetIsSubscribe(false,id))
+        }
+
+    })
 
 }

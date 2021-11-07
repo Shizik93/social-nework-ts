@@ -2,32 +2,29 @@ import {connect} from "react-redux";
 import {Users} from "./Users";
 import {AppStateType} from "../../redux/redux-store";
 import {
-    Subscribe,
     SetCurrentPage,
-    SetTotalUsersCount,
-    SetUsers,
-    UnSubscribe,
-    SetIsSubscribe,
+    getUsersThunkCreator,
+    SetSubscribe,
+    SetUnsubscribe,
 } from "../../redux/users-reducer";
 
 import React from "react";
-import {usersAPI} from "../../api/api";
+
 
 
 
 
 type usersPropsType = {
+    SetUnsubscribe:(id:number)=>void,
+    SetSubscribe:(id:number)=>void,
     users: Array<UserType>,
-    Subscribe: (id: number) => void,
-    UnSubscribe: (id: number) => void,
-    SetUsers: (users: any) => void,
     pageSize: number,
     totalUsersCount: number,
     currentPage: number
     SetCurrentPage: (currentPage: number) => void
-    SetTotalUsersCount: (totalUsersCount: number) => void
-    SetIsSubscribe:(boolean: boolean,id:number)=>void
     subscribeUsers:Array<number>
+    getUsersThunkCreator:(currentPage:number,pageSize:number)=>void
+
 }
 export type UserType = {
     name: string
@@ -41,21 +38,11 @@ export type UserType = {
     followed: boolean
 }
 
-type DataType = {
-    error: null | string
-    totalCount: number
-    items: Array<UserType>
-}
 
 export class UsersClass extends React.Component <usersPropsType> {
 
     componentDidMount() {
-        usersAPI.getUsers(this.props.currentPage,this.props.pageSize).then(data=>{
-            this.props.SetUsers(data.items)
-            this.props.SetTotalUsersCount(data.totalCount)
-        })
-
-
+        this.props.getUsersThunkCreator(this.props.currentPage,this.props.pageSize)
 
 
     }
@@ -64,10 +51,7 @@ export class UsersClass extends React.Component <usersPropsType> {
     onPageChanged = (pageNumber: number) => {
         this.props.SetCurrentPage(pageNumber)
         {
-            usersAPI.onPageChanged(pageNumber,this.props.pageSize).then(data => {
-                this.props.SetUsers(data.items)
-
-            })
+            this.props.getUsersThunkCreator(pageNumber,this.props.pageSize)
         }
     }
 
@@ -75,18 +59,36 @@ export class UsersClass extends React.Component <usersPropsType> {
     render() {
         let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
         let pages: number[] = [];
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i)
+        function createPages(pages:Array<number>, pagesCount:number, currentPage:number) {
+            if(pagesCount > 10) {
+                if(currentPage > 5) {
+                    for (let i = currentPage-4; i <= currentPage+5; i++) {
+                        pages.push(i)
+                        if(i === pagesCount) break
+                    }
+                }
+                else {
+                    for (let i = 1; i <= 10; i++) {
+                        pages.push(i)
+                        if(i === pagesCount) break
+                    }
+                }
+            }  else {
+                for (let i = 1; i <= pagesCount; i++) {
+                    pages.push(i)
+                }
+            }
         }
+        createPages(pages,pagesCount,this.props.currentPage)
         return (
             <Users users={this.props.users}
-                   Subscribe={this.props.Subscribe}
-                   UnSubscribe={this.props.UnSubscribe}
                    currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
                    pages={pages}
-                   SetIsSubscribe={this.props.SetIsSubscribe}
-                   subscribeUsers={this.props.subscribeUsers}/>
+                   subscribeUsers={this.props.subscribeUsers}
+                   SetSubscribe={this.props.SetSubscribe}
+                   SetUnsubscribe={this.props.SetUnsubscribe}
+            />
 
         )
     }
@@ -94,7 +96,6 @@ export class UsersClass extends React.Component <usersPropsType> {
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        //@ts-ignore
         subscribeUsers:state.usersReducer.subscribeUsers,
         users: state.usersReducer.users,
         pageSize: state.usersReducer.pageSize,
@@ -107,9 +108,7 @@ const mapStateToProps = (state: AppStateType) => {
 
 export const UsersContainer = connect(mapStateToProps,
     {
-        SetIsSubscribe,
-        Subscribe,
-        UnSubscribe,
-        SetUsers,
-        SetCurrentPage,
-        SetTotalUsersCount})(UsersClass)
+        SetUnsubscribe,
+        SetSubscribe,
+        getUsersThunkCreator,
+        SetCurrentPage,})(UsersClass)

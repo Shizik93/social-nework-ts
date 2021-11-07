@@ -2,16 +2,14 @@ import React from "react";
 import m from "./users.module.css";
 import img from "./userImg.png";
 import { NavLink } from "react-router-dom";
-import {usersAPI} from "../../api/api";
 type usersPropsType = {
+    SetUnsubscribe:(id:number)=>void,
     users: Array<UserType>,
-    Subscribe: (id: number) => void,
-    UnSubscribe: (id: number) => void,
     currentPage: number
     onPageChanged: (pageNumber: number) => void
     pages: number[],
-    SetIsSubscribe:(boolean: boolean,id:number)=>void,
-    subscribeUsers:Array<number>
+    subscribeUsers:Array<number>,
+    SetSubscribe:(id:number)=>void
 }
 export type UserType = {
     name: string
@@ -47,23 +45,12 @@ export function Users(props: usersPropsType) {
                     <div>{f.name}</div>
                     <div>{f.status}</div>
                     {f.followed ?
-                        <button disabled={props.subscribeUsers.some(id=>id===f.id)} onClick={() => {
-                            props.SetIsSubscribe(true,f.id)
-                            usersAPI.deleteSubscribe(f.id).then(resultCode => {
-                                if(resultCode===0){
-                                    props.UnSubscribe(f.id)
-                                    props.SetIsSubscribe(false,f.id)}
-
-                            })
-                            }}>Unsubscribe</button> :
-                        <button disabled={props.subscribeUsers.some(id=>id===f.id)} onClick={() => {
-                            props.SetIsSubscribe(true,f.id)
-                            usersAPI.postSubscribe(f.id).then(resultCode => {
-                            if(resultCode===0){
-                                props.Subscribe(f.id)
-                                props.SetIsSubscribe(false,f.id)}
-
-                        })}}>Subscribe</button>}
+                        <button
+                            disabled={props.subscribeUsers.some(id=>id===f.id)}
+                            onClick={() => {props.SetSubscribe(f.id)}}>Unsubscribe</button> :
+                        <button
+                            disabled={props.subscribeUsers.some(id=>id===f.id)} onClick={() => {
+                            props.SetUnsubscribe(f.id)}}>Subscribe</button>}
 
 
                 </div>)

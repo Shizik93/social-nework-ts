@@ -1,3 +1,5 @@
+import {authAPI} from "../api/api";
+
 type initialStateType={
     userId:number|null,
     email:string|null,
@@ -29,4 +31,14 @@ export const setAuthUserData = (userId:number,login: string,email:string) => {
         data:{userId,login,email}
     } as const
 
+}
+
+export const setLogin = () =>(dispatch:any)=>{
+    authAPI.login()
+        .then(data => {
+            if (data.resultCode === 0) {
+                let{id,login,email}=data.data
+                dispatch(setAuthUserData(id,login,email))
+            }
+        })
 }
