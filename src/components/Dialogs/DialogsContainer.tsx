@@ -1,13 +1,15 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, ComponentType} from "react";
 import {ChangeNewMessageAC, dialogsReducerType, SendMessageAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
+import {withAuthRedirect} from "../HOC/withAuthRedirect";
+import {compose} from "redux";
 
 let mapStateToProps = (state: AppStateType) => {
     return {
         state: state.dialogsReducer,
-        isAuth:state.auth.isAuth
+       
     }
 }
 let mapDispatchToProps = (dispatch: (action: dialogsReducerType) => void) => {
@@ -20,8 +22,8 @@ let mapDispatchToProps = (dispatch: (action: dialogsReducerType) => void) => {
         }
     }
 }
+export const DialogsContainer=compose<ComponentType>(connect(mapStateToProps, mapDispatchToProps),withAuthRedirect)(Dialogs)
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 
 
 

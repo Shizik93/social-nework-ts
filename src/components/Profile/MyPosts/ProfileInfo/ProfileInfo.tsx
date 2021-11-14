@@ -1,5 +1,4 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
 import m from './ProfileInfo.module.css'
 
 type ProfileUsersType = {

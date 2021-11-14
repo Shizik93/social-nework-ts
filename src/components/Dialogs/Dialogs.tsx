@@ -16,8 +16,6 @@ type DialogsPropsType = {
 }
 
 function Dialogs(props: DialogsPropsType) {
-    if(!props.isAuth){return <Redirect to={'/login'}/>}
-
     const ChangeNewMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.ChangeNewMessage(e)
 

@@ -1,12 +1,12 @@
 import React from "react";
-
+import img from './924874.png'
 import m from './Post.module.css'
 import {TypePost} from "../../../../redux/profile-reducer";
 
 export function Post(props:TypePost) {
     return (
         <div className={m.post}>
-            <img src='https://www.meme-arsenal.com/memes/0f8248f0809b1231a56fa7a18c24796f.jpg'/>
+            <img src={img}/>
             <div>{props.message}</div>
             <div>
                 <span>like </span>
