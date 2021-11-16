@@ -56,21 +56,21 @@ export type UserType = {
 }
 
 const instance = axios.create({
-    baseURL: `https://social-network.samuraijs.com/api/1.0/`,
-    withCredentials: true,
-    headers: {
-        'API-KEY': 'a9f5b347-68da-4301-888d-541b1ac92546'
+        baseURL: `https://social-network.samuraijs.com/api/1.0/`,
+        withCredentials: true,
+        headers: {
+            'API-KEY': 'a9f5b347-68da-4301-888d-541b1ac92546'
         }
     }
 )
-const instancePost=axios.create({
-    baseURL:`https://social-network.samuraijs.com/api/1.0/`,
-    data:{},
+const instancePost = axios.create({
+    baseURL: `https://social-network.samuraijs.com/api/1.0/`,
+    data: {},
     withCredentials: true,
     headers: {
-            'API-KEY': 'a9f5b347-68da-4301-888d-541b1ac92546'
-        }
-   } )
+        'API-KEY': 'a9f5b347-68da-4301-888d-541b1ac92546'
+    }
+})
 
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
@@ -93,7 +93,7 @@ export const usersAPI = {
     },
     deleteSubscribe(id: number) {
         return instance.delete<subscribeType>(`follow/${id}`,
-         ).then(response => {
+        ).then(response => {
             return response.data.resultCode
         })
 
@@ -118,10 +118,20 @@ export const profileAPI = {
     getUserProfile(userId: string) {
         return instance.get<ProfileUsersType>('profile/' + userId)
             .then(response => {
-                return response.data
-            }
-        )
+                    return response.data
+                }
+            )
 
+    }, getUserProfileStatus: (userId: number | null) => {
+
+        return instance.get<string>('/profile/status/' + userId)
+            .then((res) => res.data)
     },
+    setUserProfileStatus: (userStatus: string) => {
+        return instancePost.put<string>(`profile/status/`, {status: userStatus})
+            .then((res) => res.data)
+
+    }
 }
+
 

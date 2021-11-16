@@ -26,11 +26,13 @@ type ProfileUsersType={
 type ProfilePropsType={
     profile:ProfileUsersType|null
     setUserProfile:(profile:ProfileUsersType)=>void
+    status:string
+    updateStatus:(status:string)=>void
 }
 export function Profile(props:ProfilePropsType) {
     return (
         <div>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
             <MyPostsContainer/>
         </div>)
 }

@@ -28,6 +28,7 @@ export type TypePost = {
     like: number
 }
 export type TypeProfilePage = {
+    status:string
     profile:ProfileUsersType|null
     textarea: string
     post: Array<TypePost>
@@ -37,6 +38,7 @@ export type initialProfileStateType = TypeProfilePage
 
 
 let initialState: initialProfileStateType = {
+    status:'',
     profile:null,
     textarea: '',
     post: [
@@ -45,7 +47,7 @@ let initialState: initialProfileStateType = {
 }
 
 
-export type profileReducerType = ChangeTextAction | AddPostAction|setUserProfileType
+export type profileReducerType = ChangeTextAction | AddPostAction|setUserProfileType|getUserProfileStatusType
 
 export const profileReducer = (state: initialProfileStateType = initialState, action: profileReducerType): initialProfileStateType => {
     switch (action.type) {
@@ -57,6 +59,10 @@ export const profileReducer = (state: initialProfileStateType = initialState, ac
         }
           case 'SET-PROFILE-USER': {
             return {...state,profile:action.profile}
+        }
+        case 'GET-PROFILE-USER-STATUS': {
+
+            return {...state,status:action.status}
         }
 
         default:
@@ -82,8 +88,30 @@ export const setUserProfile = (profile:ProfileUsersType) => {
     } as const
 }
 export const getUserProfile = (userId: string) => (dispatch:any)=>{
+
     profileAPI.getUserProfile(userId).then(data => {
         dispatch(setUserProfile(data))
-    })
+    }).catch((err)=>console.log('getUserProfile'+err))
 
+}
+export type getUserProfileStatusType = ReturnType<typeof getUserProfileStatus>
+export const getUserProfileStatus = (status:string) => {
+    return {
+
+        type: 'GET-PROFILE-USER-STATUS',
+        status
+    } as const
+}
+export const getUserProfileStatusThunk = (userId:number|null) => (dispatch:any)=> {
+
+    profileAPI.getUserProfileStatus(userId).then(data => {
+        dispatch(getUserProfileStatus(data))
+    })
+}
+export const setUserProfileStatusThunk = (status:string) => (dispatch:any)=> {
+
+    profileAPI.setUserProfileStatus(status).then(data => {
+
+        dispatch(getUserProfileStatus(status))
+    })
 }

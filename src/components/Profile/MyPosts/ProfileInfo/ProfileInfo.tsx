@@ -1,5 +1,6 @@
 import React from "react";
 import m from './ProfileInfo.module.css'
+import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileUsersType = {
 
@@ -25,6 +26,8 @@ type ProfileUsersType = {
 }
 type ProfileInfoPropsType = {
     profile: ProfileUsersType | null
+    updateStatus: (status: string) => void
+    status: string
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
@@ -34,22 +37,24 @@ function ProfileInfo(props: ProfileInfoPropsType) {
 
 
         <div>
+
             <div>
                 <img className={m.img}
                      src='https://worksolutions.ru/storage/UxBYDUfBNl9RfD5r6wMDvAWke3mGTfZaDcmHGZWc.png'/>
             </div>
+            <h3><ProfileStatus status={props.status} updateStatus={props.updateStatus}/></h3>
             <div className={m.descriptionBlock}>
                 {props.profile?.photos.large && <img src={props.profile.photos.large}/>}
                 <h1>{props.profile?.fullName}</h1>
                 <h2>{props.profile?.aboutMe}</h2>
-                {props.profile?.contacts.vk && <li>{props.profile?.contacts.vk}</li> }
-                {props.profile?.contacts.twitter && <li>{props.profile?.contacts.twitter}</li> }
-                {props.profile?.contacts.instagram && <li>{props.profile?.contacts.instagram}</li> }
-                {props.profile?.contacts.github && <li>{props.profile?.contacts.github}</li> }
-                {props.profile?.contacts.website && <li>{props.profile?.contacts.website}</li> }
-                {props.profile?.contacts.facebook && <li>{props.profile?.contacts.facebook}</li> }
-                {props.profile?.contacts.mainLink && <li>{props.profile?.contacts.mainLink}</li> }
-                {props.profile?.contacts.youtube && <li>{props.profile?.contacts.youtube}</li> }
+                {props.profile?.contacts.vk && <li>{props.profile?.contacts.vk}</li>}
+                {props.profile?.contacts.twitter && <li>{props.profile?.contacts.twitter}</li>}
+                {props.profile?.contacts.instagram && <li>{props.profile?.contacts.instagram}</li>}
+                {props.profile?.contacts.github && <li>{props.profile?.contacts.github}</li>}
+                {props.profile?.contacts.website && <li>{props.profile?.contacts.website}</li>}
+                {props.profile?.contacts.facebook && <li>{props.profile?.contacts.facebook}</li>}
+                {props.profile?.contacts.mainLink && <li>{props.profile?.contacts.mainLink}</li>}
+                {props.profile?.contacts.youtube && <li>{props.profile?.contacts.youtube}</li>}
 
             </div>
 

@@ -30,7 +30,7 @@ export function Users(props: usersPropsType) {
         <>
             <div>
                 {props.pages.map(f =>
-                    <span className={`${props.currentPage === f && m.selectedPage}`}
+                    <span key={f} className={`${props.currentPage === f && m.selectedPage}`}
                           onClick={() => {
                               props.onPageChanged(f)
                           }}>{f} </span>)}

@@ -50,9 +50,8 @@ export class UsersClass extends React.Component <usersPropsType> {
 
     onPageChanged = (pageNumber: number) => {
         this.props.SetCurrentPage(pageNumber)
-        {
-            this.props.getUsersThunkCreator(pageNumber,this.props.pageSize)
-        }
+        this.props.getUsersThunkCreator(pageNumber,this.props.pageSize)
+
     }
 
 
