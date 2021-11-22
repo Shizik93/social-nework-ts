@@ -9,14 +9,13 @@ export type TypeMessage = {
 }
 
 export type TypeDialogsPage = {
-    newMessage: string
     messages: Array<TypeMessage>
     dialogs: Array<TypeDialogs>
 }
 export type initialDialogsStateType=TypeDialogsPage
 
 const initialState:initialDialogsStateType={
-        newMessage: '',
+
         messages: [
             {message: 'Hi'},
             {message: 'How is your it-kamasutra?'},
@@ -33,30 +32,22 @@ const initialState:initialDialogsStateType={
 
     }
 
-export type dialogsReducerType=ChangeNewMessageAction|SendMessageActionType
+export type dialogsReducerType=SendMessageActionType
 export const dialogsReducer = (state:initialDialogsStateType=initialState, action: dialogsReducerType):initialDialogsStateType => {
     switch (action.type) {
-        case 'CHANGE-NEW-MESSAGE': {
-            return {...state,newMessage:action.newMessage}
-        }
         case 'SEND-MESSAGE': {
-            return{...state,newMessage:'',messages:[...state.messages,{message: state.newMessage}]}
+
+            return{...state,messages:[...state.messages,{message:action.value}]}
         }
         default:return state
     }
 }
-export type ChangeNewMessageAction=ReturnType<typeof ChangeNewMessageAC>
-export const ChangeNewMessageAC = (value: string) => {
-    return {
-        type: 'CHANGE-NEW-MESSAGE',
-        newMessage: value
-    } as const
 
-}
  export type SendMessageActionType=ReturnType<typeof SendMessageAC>
-export const SendMessageAC = () => {
+export const SendMessageAC = (value:any) => {
     return {
         type: 'SEND-MESSAGE',
+        value
     }as const
 
 

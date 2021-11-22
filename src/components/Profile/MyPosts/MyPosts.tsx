@@ -1,24 +1,21 @@
 import m from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import React, {ChangeEvent} from "react";
+import React from "react";
 import {TypePost} from "../../../redux/profile-reducer";
+import AddNewPostForm from "./addNewPostForm";
 
 
 type PropsMyProfileType = {
     post: Array<TypePost>
-    addPost: () => void
-    onChangeTextArea: (e: ChangeEvent<HTMLTextAreaElement>) => void,
-    textarea: string
+    addPost: (value:any) => void
 }
 
 export function MyPosts(props: PropsMyProfileType) {
-    const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.onChangeTextArea(e)
 
-    }
 
-    const addPost = () => {
-        props.addPost()
+    const addPost = (value:any) => {
+
+        props.addPost(value.newPost)
     }
 
     const postsElement = props.post.map(p => <Post key={p.id} id={p.id} message={p.message} like={p.like}/>)
@@ -26,14 +23,7 @@ export function MyPosts(props: PropsMyProfileType) {
         <div className={m.myPosts}>
 
             <h3>My Posts</h3>
-            <div>
-
-                <div><textarea value={props.textarea} onChange={onChangeTextArea}/></div>
-                <div>
-                    <button onClick={addPost}>Add post</button>
-                </div>
-
-            </div>
+            <AddNewPostForm onSubmit={addPost}/>
             <div className={m.posts}>
                 {postsElement}
             </div>

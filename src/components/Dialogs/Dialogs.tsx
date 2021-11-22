@@ -4,24 +4,22 @@ import m from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import { TypeDialogsPage } from "../../redux/dialogs-reducer";
-import {Redirect} from "react-router-dom";
+import AddNewPostForm from "./AddNewMessageForm";
+
+
 
 
 
 type DialogsPropsType = {
-    ChangeNewMessage: (e: ChangeEvent<HTMLTextAreaElement>) => void
-    AddNewMessage: () => void
+    AddNewMessage: (value:any) => void
     state: TypeDialogsPage
     isAuth:boolean
 }
 
 function Dialogs(props: DialogsPropsType) {
-    const ChangeNewMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.ChangeNewMessage(e)
 
-    }
-    const AddNewMessage = () => {
-        props.AddNewMessage()
+    const AddNewMessage = (value:any) => {
+        props.AddNewMessage(value.newMessage)
 
 
 
@@ -41,10 +39,7 @@ function Dialogs(props: DialogsPropsType) {
                 {messagesElements}
 
             </div>
-            <div>
-                <textarea onChange={ChangeNewMessage} value={props.state.newMessage}></textarea>
-                <button onClick={AddNewMessage}>Send Message</button>
-            </div>
+            <AddNewPostForm onSubmit={AddNewMessage}/>
         </div>
     )
 }

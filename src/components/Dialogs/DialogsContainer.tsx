@@ -1,5 +1,5 @@
-import React, {ChangeEvent, ComponentType} from "react";
-import {ChangeNewMessageAC, dialogsReducerType, SendMessageAC} from "../../redux/dialogs-reducer";
+import React, {ComponentType} from "react";
+import {dialogsReducerType, SendMessageAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
@@ -14,12 +14,11 @@ let mapStateToProps = (state: AppStateType) => {
 }
 let mapDispatchToProps = (dispatch: (action: dialogsReducerType) => void) => {
     return {
-        AddNewMessage: () => {
-            dispatch(SendMessageAC())
+        AddNewMessage: (value:any) => {
+
+            dispatch(SendMessageAC(value))
         },
-        ChangeNewMessage: (e: ChangeEvent<HTMLTextAreaElement>) => {
-            dispatch(ChangeNewMessageAC(e.currentTarget.value))
-        }
+
     }
 }
 export const DialogsContainer=compose<ComponentType>(connect(mapStateToProps, mapDispatchToProps),withAuthRedirect)(Dialogs)

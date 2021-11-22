@@ -30,7 +30,6 @@ export type TypePost = {
 export type TypeProfilePage = {
     status:string
     profile:ProfileUsersType|null
-    textarea: string
     post: Array<TypePost>
 }
 
@@ -40,23 +39,20 @@ export type initialProfileStateType = TypeProfilePage
 let initialState: initialProfileStateType = {
     status:'',
     profile:null,
-    textarea: '',
     post: [
         {id:v1(),message: 'Hi,how are you?', like: 12},
         {id:v1(),message: 'It is my first post', like: 11}]
 }
 
 
-export type profileReducerType = ChangeTextAction | AddPostAction|setUserProfileType|getUserProfileStatusType
+export type profileReducerType =AddPostAction|setUserProfileType|getUserProfileStatusType
 
 export const profileReducer = (state: initialProfileStateType = initialState, action: profileReducerType): initialProfileStateType => {
     switch (action.type) {
         case 'ADD-POST': {
-            return {...state,textarea:'',post:[...state.post,{id:v1(),message:state.textarea,like: 0}]}
+            return {...state,post:[...state.post,{id:v1(),message:action.value,like: 0}]}
         }
-        case 'CHANGE-TEXT': {
-            return {...state,textarea:action.value}
-        }
+
           case 'SET-PROFILE-USER': {
             return {...state,profile:action.profile}
         }
@@ -70,14 +66,10 @@ export const profileReducer = (state: initialProfileStateType = initialState, ac
     }
 }
 export type AddPostAction = ReturnType<typeof AddPostAC>
-export const AddPostAC = () => {
-    return {type: 'ADD-POST'} as const
-}
-export type ChangeTextAction = ReturnType<typeof ChangeTextAC>
-export const ChangeTextAC = (value: string) => {
+export const AddPostAC = (value:any) => {
     return {
-        type: 'CHANGE-TEXT',
-        value: value
+        type: 'ADD-POST',
+        value
     } as const
 }
 export type setUserProfileType = ReturnType<typeof setUserProfile>
