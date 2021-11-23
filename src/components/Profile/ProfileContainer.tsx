@@ -14,6 +14,7 @@ import {withAuthRedirect} from "../HOC/withAuthRedirect";
 import {compose} from "redux";
 
 
+
 type ProfileUsersType = {
 
     aboutMe: string,
@@ -85,3 +86,4 @@ export default compose<ComponentType>(connect(mapStateToProps, {
     getUserProfile,
     getUserProfileStatusThunk,
     setUserProfileStatusThunk}),withRouter,withAuthRedirect)(ProfileContainer)
+

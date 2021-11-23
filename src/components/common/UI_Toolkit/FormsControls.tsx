@@ -13,8 +13,6 @@ const FormControl = (props:any) => {
 
     )
 }
-  
-
 export const Textarea = (props: any) => {
     const input = props.input
     return (

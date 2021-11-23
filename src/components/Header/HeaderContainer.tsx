@@ -10,7 +10,7 @@ type AuthType={
     isAuth:boolean
 }
 type HeaderContainerPropsType={
-    setAuthUserData:(userId:number,email:string,login: string)=>void,
+    setAuthUserData:(userId:number|null,email:string|null,login: string|null,isAuth: boolean)=>void,
     auth:AuthType
     getUserProfile:()=>void
 }

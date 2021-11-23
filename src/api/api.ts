@@ -1,5 +1,9 @@
 import axios from "axios";
-
+type logoutResType={
+    resultCode: number
+    messages: Array<string>,
+    data: {}
+}
 type subscribeType = {
 
     resultCode: number
@@ -57,7 +61,7 @@ export type UserType = {
 
 const instance = axios.create({
         baseURL: `https://social-network.samuraijs.com/api/1.0/`,
-        withCredentials: true,
+        withCredentials:true,
         headers: {
             'API-KEY': 'a9f5b347-68da-4301-888d-541b1ac92546'
         }
@@ -66,7 +70,7 @@ const instance = axios.create({
 const instancePost = axios.create({
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
     data: {},
-    withCredentials: true,
+   withCredentials:true,
     headers: {
         'API-KEY': 'a9f5b347-68da-4301-888d-541b1ac92546'
     }
@@ -79,18 +83,7 @@ export const usersAPI = {
                 return response.data
             })
     },
-    onPageChanged(pageNumber: number, pageSize: number) {
 
-        {
-            return instance.get<DataType>(`users?page=${pageNumber}&count=${pageSize}`)
-                .then(response => {
-                    return response.data
-
-
-                })
-        }
-
-    },
     deleteSubscribe(id: number) {
         return instance.delete<subscribeType>(`follow/${id}`,
         ).then(response => {
@@ -107,11 +100,20 @@ export const usersAPI = {
 }
 
 export const authAPI = {
-    login() {
+    me() {
         return instance.get<AuthResponseType>(`auth/me`).then(response => {
+            debugger
             return response.data
         })
     },
+    login(email:string,password:string,rememberMe:boolean=false) {
+        return instance.post<AuthResponseType>(`auth/login`,{email,password,rememberMe}).then(response => {
+            return response.data
+        })
+    },
+    logout(){
+        return instance.delete<logoutResType>('auth/login')
+    }
 }
 
 export const profileAPI = {

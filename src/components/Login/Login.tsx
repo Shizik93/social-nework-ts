@@ -1,13 +1,19 @@
 import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../common/UI_Toolkit/FormsControls";
-import {maxLengthCreator, required} from "../common/validators/validator";
+import {required} from "../common/validators/validator";
+import {login} from "../../redux/auth-reducer";
+import {connect} from "react-redux";
+
 type FormDataType={
     login:string,
     password:string,
     rememberMe:boolean
 }
-const maxLength15=maxLengthCreator(15)
+
+type LoginPropsType={
+    login:(email: string, password: string, rememberMe: boolean)=>void
+}
 export const LoginForm = (props:InjectedFormProps<FormDataType>) => {
 
 
@@ -15,10 +21,10 @@ export const LoginForm = (props:InjectedFormProps<FormDataType>) => {
         <form onSubmit={props.handleSubmit}>
 
             <div>
-                <Field validate={[required,maxLength15]} name={'login'} placeholder={'Login'} component={Input}/>
+                <Field validate={[required]} name={'login'} placeholder={'Login'} component={Input}/>
             </div>
             <div>
-                <Field validate={[required,maxLength15]} name={'password'} placeholder={'Password'} component={Input}/>
+                <Field validate={[required]} name={'password'} type={'password'} placeholder={'Password'} component={Input}/>
             </div>
             <div style={{fontSize: '15px'}}>
                 <Field name={'rememberMe'} component={Input} type={'checkbox'}/>Remember
@@ -31,17 +37,21 @@ export const LoginForm = (props:InjectedFormProps<FormDataType>) => {
     )
 
 }
-const LoginReduxForm = reduxForm<FormDataType>({
-    form: 'login',
+const LoginReduxForm = reduxForm<FormDataType>({form: 'login',})(LoginForm)
+const Login = (props:LoginPropsType) => {
 
-})(LoginForm)
-
-export const Login = () => {
     const onSubmit = (formData:FormDataType) => {
+        props.login(formData.login,formData.password,formData.rememberMe)
+
 
     }
+
     return (
-        <h1><LoginReduxForm onSubmit={onSubmit}/></h1>
+        <div>
+        <h1>Login</h1>
+            <LoginReduxForm onSubmit={onSubmit}/>
+        </div>
     )
 
 }
+export default connect(null,{login})(Login)

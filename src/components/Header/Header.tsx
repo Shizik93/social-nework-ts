@@ -8,13 +8,14 @@ type AuthType={
     isAuth:boolean
 }
 type HeaderPropsType={
-    setAuthUserData:(userId:number,email:string,login: string)=>void,
+    setAuthUserData:(userId:number|null,email:string|null,login: string|null,isAuth: boolean)=>void,
     auth:AuthType}
 export function Header(props:HeaderPropsType)  {
+
   return (<header className={m.header}>
       <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/LEGO_logo.svg/500px-LEGO_logo.svg.png'/>
           <div className={m.loginBlock}>
-              {props.auth.isAuth?props.auth.login:<NavLink to={'/'}>{props.auth.login}</NavLink>}
+              {props.auth.isAuth?props.auth.login:<NavLink to={'/'}>login</NavLink>}
           </div>
     </header>
 

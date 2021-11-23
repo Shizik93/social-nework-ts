@@ -1,44 +1,65 @@
 import {authAPI} from "../api/api";
 
-type initialStateType={
-    userId:number|null,
-    email:string|null,
-    login:string|null,
-    isAuth:boolean
+type initialStateType = {
+    userId: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean
 }
-type authReducerType=setUserDataType
-const initialState:initialStateType={
-    userId:null,
-    email:null,
-    login:null,
-    isAuth:false,
+type authReducerType = setUserDataType
+const initialState: initialStateType = {
+    userId: null,
+    email: null,
+    login: null,
+    isAuth: false,
 }
 
-export const authReducer=(state:initialStateType=initialState,action:authReducerType):initialStateType=>{
+export const authReducer = (state: initialStateType = initialState, action: authReducerType): initialStateType => {
     switch (action.type) {
-        case 'SET-USER-DATA':{
-            return {...state,...action.data,isAuth:true}
+        case 'SET-USER-DATA': {
+            return {...state, ...action.data}
         }
-        default :return state
+        default :
+            return state
 
     }
 
 }
-export type setUserDataType=ReturnType<typeof setAuthUserData>
-export const setAuthUserData = (userId:number,login: string,email:string) => {
+export type setUserDataType = ReturnType<typeof setAuthUserData>
+export const setAuthUserData = (userId: number | null, login: string | null, email: string | null, isAuth: boolean) => {
     return {
         type: 'SET-USER-DATA',
-        data:{userId,login,email}
+        data: {userId, login: login, email, isAuth}
     } as const
 
 }
 
-export const setLogin = () =>(dispatch:any)=>{
-    authAPI.login()
+export const setLogin = () => (dispatch: any) => {
+    authAPI.me()
         .then(data => {
             if (data.resultCode === 0) {
-                let{id,login,email}=data.data
-                dispatch(setAuthUserData(id,login,email))
+                debugger
+                let {id, login, email} = data.data
+                dispatch(setAuthUserData(id, login, email, true))
             }
         })
+}
+export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
+    authAPI.login(email, password, rememberMe)
+        .then(data => {
+            if (data.resultCode === 0) {
+                debugger
+                dispatch(setLogin())
+            }
+        })
+}
+export const logout = () => (dispatch: any) => {
+    authAPI.logout()
+        .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(setAuthUserData(null, null, null, true))
+                }
+            }
+        )
+
 }
