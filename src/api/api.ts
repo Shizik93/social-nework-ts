@@ -102,7 +102,6 @@ export const usersAPI = {
 export const authAPI = {
     me() {
         return instance.get<AuthResponseType>(`auth/me`).then(response => {
-            debugger
             return response.data
         })
     },

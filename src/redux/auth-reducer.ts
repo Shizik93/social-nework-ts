@@ -1,4 +1,5 @@
 import {authAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 type initialStateType = {
     userId: number | null,
@@ -38,18 +39,20 @@ export const setLogin = () => (dispatch: any) => {
     authAPI.me()
         .then(data => {
             if (data.resultCode === 0) {
-                debugger
                 let {id, login, email} = data.data
                 dispatch(setAuthUserData(id, login, email, true))
             }
         })
 }
 export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
-    authAPI.login(email, password, rememberMe)
+
+   authAPI.login(email, password, rememberMe)
         .then(data => {
             if (data.resultCode === 0) {
-                debugger
                 dispatch(setLogin())
+            }
+            else{
+                dispatch(stopSubmit('login',{_error:data.messages[0]}))
             }
         })
 }
@@ -57,7 +60,7 @@ export const logout = () => (dispatch: any) => {
     authAPI.logout()
         .then(res => {
                 if (res.data.resultCode === 0) {
-                    dispatch(setAuthUserData(null, null, null, true))
+                    dispatch(setAuthUserData(null, null, null, false))
                 }
             }
         )
