@@ -36,11 +36,12 @@ export const setAuthUserData = (userId: number | null, login: string | null, ema
 }
 
 export const setLogin = () => (dispatch: any) => {
-    authAPI.me()
+    return  authAPI.me()
         .then(data => {
             if (data.resultCode === 0) {
                 let {id, login, email} = data.data
                 dispatch(setAuthUserData(id, login, email, true))
+
             }
         })
 }
