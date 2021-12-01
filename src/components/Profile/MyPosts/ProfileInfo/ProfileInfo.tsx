@@ -1,6 +1,6 @@
 import React from "react";
 import m from './ProfileInfo.module.css'
-import {ProfileStatus} from "./ProfileStatus";
+import { ProfileStatusHooks } from "./ProfileStatusHooks";
 
 type ProfileUsersType = {
 
@@ -42,7 +42,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                 <img className={m.img}
                      src='https://worksolutions.ru/storage/UxBYDUfBNl9RfD5r6wMDvAWke3mGTfZaDcmHGZWc.png'/>
             </div>
-            <h3><ProfileStatus status={props.status} updateStatus={props.updateStatus}/></h3>
+            <h3><ProfileStatusHooks status={props.status} updateStatus={props.updateStatus}/></h3>
             <div className={m.descriptionBlock}>
                 {props.profile?.photos.large && <img src={props.profile.photos.large}/>}
                 <h1>{props.profile?.fullName}</h1>

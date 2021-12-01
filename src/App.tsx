@@ -21,11 +21,11 @@ import { initializingApp } from "./redux/app-reducer";
 function App() {
     const state = useSelector((state: AppStateType) => state)
     const dispatch = useDispatch()
+    const initialized = state.appReducer.initialized
     useEffect(() => {
         dispatch(setLogin())
 
     }, [])
-    const initialized = state.appReducer.initialized
     useEffect(()=>{
         dispatch(initializingApp())
     },[])
