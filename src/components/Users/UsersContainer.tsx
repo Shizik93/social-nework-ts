@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {Users} from "./Users";
-import {AppStateType} from "../../redux/redux-store";
+import {AppStateType} from "../../redux/store";
 import {
     SetCurrentPage,
     getUsersThunkCreator,

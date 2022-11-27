@@ -4,7 +4,7 @@ import {Input} from "../common/UI_Toolkit/FormsControls";
 import {required} from "../common/validators/validator";
 import {login} from "../../redux/auth-reducer";
 import {connect, useSelector} from "react-redux";
-import {AppStateType, RootType} from "../../redux/redux-store";
+import {AppStateType, RootType} from "../../redux/store";
 import {Redirect} from "react-router-dom";
 
 type FormDataType={

@@ -11,17 +11,15 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 
-import {useDispatch, useSelector} from "react-redux";
 import {setLogin} from "./redux/auth-reducer";
-import {AppStateType} from "./redux/redux-store";
 import {Preloader} from "./components/common/preloader/preloader";
 import { initializingApp } from "./redux/app-reducer";
+import {useAppDispatch, useAppSelector} from "./redux/hooks/hooks";
 
 
 function App() {
-    const state = useSelector((state: AppStateType) => state)
-    const dispatch = useDispatch()
-    const initialized = state.appReducer.initialized
+    const initialized = useAppSelector(state=>state.appReducer.initialized)
+    const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(setLogin())
 

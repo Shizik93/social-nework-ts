@@ -7,7 +7,7 @@ type initialStateType = {
     login: string | null,
     isAuth: boolean
 }
-type authReducerType = setUserDataType
+export type authReducerType = setUserDataType
 const initialState: initialStateType = {
     userId: null,
     email: null,

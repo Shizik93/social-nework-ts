@@ -6,7 +6,7 @@ type initialStateType={
 const initialState={
     initialized:false
 }
-type AppReducerType=SetInitializedType
+export  type AppReducerType=SetInitializedType
 export const appReducer=(state:initialStateType=initialState,action:AppReducerType):initialStateType=>{
     switch (action.type){
 
