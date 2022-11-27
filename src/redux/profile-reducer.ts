@@ -1,5 +1,6 @@
 import {v1} from "uuid";
 import {profileAPI} from "../api/api";
+import {AppThunk} from "./store";
 type ProfileUsersType={
 
     aboutMe:string,
@@ -56,7 +57,7 @@ export const profileReducer = (state: initialProfileStateType = initialState, ac
           case 'SET-PROFILE-USER': {
             return {...state,profile:action.profile}
         }
-        case 'GET-PROFILE-USER-STATUS': {
+        case 'SET-PROFILE-USER-STATUS': {
 
             return {...state,status:action.status}
         }
@@ -80,10 +81,10 @@ export const AddPostAC = (value:any) => {
         value
     } as const
 }
-export const getUserProfileStatus = (status:string) => {
+export const setUserProfileStatus = (status:string) => {
     return {
 
-        type: 'GET-PROFILE-USER-STATUS',
+        type: 'SET-PROFILE-USER-STATUS',
         status
     } as const
 }
@@ -92,7 +93,7 @@ export const setUserProfileStatusTC = (status:string) => (dispatch:any)=> {
 
     profileAPI.setUserProfileStatus(status).then(data => {
 
-        dispatch(getUserProfileStatus(status))
+        dispatch(setUserProfileStatus(status))
     })
 }
 export const getUserProfileTC = (userId: string) => (dispatch:any)=>{
@@ -102,8 +103,19 @@ export const getUserProfileTC = (userId: string) => (dispatch:any)=>{
     }).catch((err)=>console.log('getUserProfile'+err))
 
 }
+export const getUserProfileStatusTC=(userId:string):AppThunk=> async (dispatch)=>{
+    try{
+        const status=await profileAPI.getUserProfileStatus(+userId)
+        dispatch(setUserProfileStatus(status))
+    }
+    catch (err){
+        console.log(err)
+    }
 
 
-export type getUserProfileStatusType = ReturnType<typeof getUserProfileStatus>
+}
+
+
+export type getUserProfileStatusType = ReturnType<typeof setUserProfileStatus>
 export type setUserProfileType = ReturnType<typeof setUserProfile>
 export type AddPostAction = ReturnType<typeof AddPostAC>

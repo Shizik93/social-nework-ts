@@ -1,6 +1,6 @@
 import React from "react";
 import m from "./users.module.css";
-import img from "./userImg.png";
+import img from "../../assets/images/userImg.png";
 import { NavLink } from "react-router-dom";
 type usersPropsType = {
     SetUnsubscribe:(id:number)=>void,
