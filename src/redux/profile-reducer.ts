@@ -65,28 +65,21 @@ export const profileReducer = (state: initialProfileStateType = initialState, ac
             return state
     }
 }
-export type AddPostAction = ReturnType<typeof AddPostAC>
-export const AddPostAC = (value:any) => {
-    return {
-        type: 'ADD-POST',
-        value
-    } as const
-}
-export type setUserProfileType = ReturnType<typeof setUserProfile>
+
+
+
 export const setUserProfile = (profile:ProfileUsersType) => {
     return {
         type: 'SET-PROFILE-USER',
         profile
     } as const
 }
-export const getUserProfile = (userId: string) => (dispatch:any)=>{
-
-    profileAPI.getUserProfile(userId).then(data => {
-        dispatch(setUserProfile(data))
-    }).catch((err)=>console.log('getUserProfile'+err))
-
+export const AddPostAC = (value:any) => {
+    return {
+        type: 'ADD-POST',
+        value
+    } as const
 }
-export type getUserProfileStatusType = ReturnType<typeof getUserProfileStatus>
 export const getUserProfileStatus = (status:string) => {
     return {
 
@@ -94,16 +87,23 @@ export const getUserProfileStatus = (status:string) => {
         status
     } as const
 }
-export const getUserProfileStatusThunk = (userId:number|null) => (dispatch:any)=> {
 
-    profileAPI.getUserProfileStatus(userId).then(data => {
-        dispatch(getUserProfileStatus(data))
-    })
-}
-export const setUserProfileStatusThunk = (status:string) => (dispatch:any)=> {
+export const setUserProfileStatusTC = (status:string) => (dispatch:any)=> {
 
     profileAPI.setUserProfileStatus(status).then(data => {
 
         dispatch(getUserProfileStatus(status))
     })
 }
+export const getUserProfileTC = (userId: string) => (dispatch:any)=>{
+
+    profileAPI.getUserProfile(userId).then(data => {
+        dispatch(setUserProfile(data))
+    }).catch((err)=>console.log('getUserProfile'+err))
+
+}
+
+
+export type getUserProfileStatusType = ReturnType<typeof getUserProfileStatus>
+export type setUserProfileType = ReturnType<typeof setUserProfile>
+export type AddPostAction = ReturnType<typeof AddPostAC>

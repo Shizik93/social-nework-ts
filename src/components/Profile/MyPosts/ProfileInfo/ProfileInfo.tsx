@@ -1,18 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
 import m from './ProfileInfo.module.css'
 import { ProfileStatusHooks } from "./ProfileStatusHooks";
 import {useAppDispatch, useAppSelector} from "../../../../redux/hooks/hooks";
-import {getUserProfileStatus} from "../../../../redux/profile-reducer";
+import {setUserProfileStatusTC} from "../../../../redux/profile-reducer";
 
 
 const ProfileInfo=()=> {
+
     const dispatch=useAppDispatch()
     const profile=useAppSelector(state=>state.profileReducer.profile)
     const status=useAppSelector(state=>state.profileReducer.status)
     const updateStatus=(status:string)=>{
-        dispatch(getUserProfileStatus(status))
+        dispatch(setUserProfileStatusTC(status))
     }
-
 
     return (
 

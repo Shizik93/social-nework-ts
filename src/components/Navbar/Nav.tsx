@@ -1,28 +1,30 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import m from './Nav.module.css'
+import {useAppSelector} from "../../redux/hooks/hooks";
 
 export function Nav() {
+    const authUserId=useAppSelector(state => state.auth.userId)
 
     return (
         <nav className={m.nav}>
             <div className={`${m.item} ${m.active}`}>
-                <NavLink to='/users' activeClassName={m.active}>Users</NavLink>
+                <NavLink to='/users' className={({ isActive }) => (isActive ? m.active : '')}>Users</NavLink>
             </div>
             <div className={`${m.item} ${m.active}`}>
-                <NavLink to='/profile' activeClassName={m.active}>Profile</NavLink>
+                <NavLink to={'/profile/'+ authUserId} className={({ isActive }) => (isActive ? m.active : '')}>Profile</NavLink>
             </div>
             <div className={`${m.item} ${m.active}`}>
-                <NavLink to='/dialogs' activeClassName={m.active}>Messages</NavLink>
+                <NavLink to='/dialogs' className={({ isActive }) => (isActive ? m.active : '')}>Messages</NavLink>
             </div>
             <div className={`${m.item} ${m.active}`}>
-                <NavLink to='/news' activeClassName={m.active}>News</NavLink>
+                <NavLink to='/news' className={({ isActive }) => (isActive ? m.active : '')}>News</NavLink>
             </div>
             <div className={`${m.item} ${m.active}`}>
-                <NavLink to='/music' activeClassName={m.active}>Music</NavLink>
+                <NavLink to='/music' className={({ isActive }) => (isActive ? m.active : '')}>Music</NavLink>
             </div>
             <div className={`${m.item} ${m.active}`}>
-                <NavLink  to='/settings' activeClassName={m.active}>Settings</NavLink>
+                <NavLink  to='/settings' className={({ isActive }) => (isActive ? m.active : '')} >Settings</NavLink>
             </div>
 
 
