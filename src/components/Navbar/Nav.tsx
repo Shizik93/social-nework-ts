@@ -22,7 +22,7 @@ export function Nav() {
                 <NavLink to='/music' activeClassName={m.active}>Music</NavLink>
             </div>
             <div className={`${m.item} ${m.active}`}>
-                <NavLink to='/settings' activeClassName={m.active}>Settings</NavLink>
+                <NavLink  to='/settings' activeClassName={m.active}>Settings</NavLink>
             </div>
 
 

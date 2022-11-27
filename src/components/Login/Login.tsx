@@ -4,8 +4,8 @@ import {Input} from "../common/UI_Toolkit/FormsControls";
 import {required} from "../common/validators/validator";
 import {login} from "../../redux/auth-reducer";
 import {connect, useSelector} from "react-redux";
-import {AppStateType, RootType} from "../../redux/store";
-import {Redirect} from "react-router-dom";
+import {AppStateType} from "../../redux/store";
+import {Navigate} from "react-router-dom";
 
 type FormDataType={
     login:string,
@@ -51,7 +51,7 @@ const Login = (props:LoginPropsType) => {
 
     }
 if(isAuth){
-    return <Redirect to={'/profile'}/>
+    return <Navigate to={'/profile'}/>
 }
     return (
         <div>
