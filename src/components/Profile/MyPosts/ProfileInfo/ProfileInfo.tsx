@@ -1,36 +1,17 @@
 import React from "react";
 import m from './ProfileInfo.module.css'
 import { ProfileStatusHooks } from "./ProfileStatusHooks";
+import {useAppDispatch, useAppSelector} from "../../../../redux/hooks/hooks";
+import {getUserProfileStatus} from "../../../../redux/profile-reducer";
 
-type ProfileUsersType = {
 
-    aboutMe: string,
-    contacts: {
-        facebook: string | null,
-        website: string | null,
-        vk: string | null,
-        twitter: string | null,
-        instagram: string | null,
-        youtube: string | null,
-        github: string | null,
-        mainLink: string | null
-    },
-    lookingForAJob: boolean,
-    lookingForAJobDescription: string | null,
-    fullName: string,
-    userId: number,
-    photos: {
-        small: string | null,
-        large: string | null
+const ProfileInfo=()=> {
+    const dispatch=useAppDispatch()
+    const profile=useAppSelector(state=>state.profileReducer.profile)
+    const status=useAppSelector(state=>state.profileReducer.status)
+    const updateStatus=(status:string)=>{
+        dispatch(getUserProfileStatus(status))
     }
-}
-type ProfileInfoPropsType = {
-    profile: ProfileUsersType | null
-    updateStatus: (status: string) => void
-    status: string
-}
-
-function ProfileInfo(props: ProfileInfoPropsType) {
 
 
     return (
@@ -42,19 +23,19 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                 <img className={m.img}
                      src='https://worksolutions.ru/storage/UxBYDUfBNl9RfD5r6wMDvAWke3mGTfZaDcmHGZWc.png'/>
             </div>
-            <h3><ProfileStatusHooks status={props.status} updateStatus={props.updateStatus}/></h3>
+            <h3><ProfileStatusHooks status={status} updateStatus={updateStatus}/></h3>
             <div className={m.descriptionBlock}>
-                {props.profile?.photos.large && <img src={props.profile.photos.large}/>}
-                <h1>{props.profile?.fullName}</h1>
-                <h2>{props.profile?.aboutMe}</h2>
-                {props.profile?.contacts.vk && <li>{props.profile?.contacts.vk}</li>}
-                {props.profile?.contacts.twitter && <li>{props.profile?.contacts.twitter}</li>}
-                {props.profile?.contacts.instagram && <li>{props.profile?.contacts.instagram}</li>}
-                {props.profile?.contacts.github && <li>{props.profile?.contacts.github}</li>}
-                {props.profile?.contacts.website && <li>{props.profile?.contacts.website}</li>}
-                {props.profile?.contacts.facebook && <li>{props.profile?.contacts.facebook}</li>}
-                {props.profile?.contacts.mainLink && <li>{props.profile?.contacts.mainLink}</li>}
-                {props.profile?.contacts.youtube && <li>{props.profile?.contacts.youtube}</li>}
+                {profile?.photos.large && <img src={profile.photos.large}/>}
+                <h1>{profile?.fullName}</h1>
+                <h2>{profile?.aboutMe}</h2>
+                {profile?.contacts.vk && <li>{profile?.contacts.vk}</li>}
+                {profile?.contacts.twitter && <li>{profile?.contacts.twitter}</li>}
+                {profile?.contacts.instagram && <li>{profile?.contacts.instagram}</li>}
+                {profile?.contacts.github && <li>{profile?.contacts.github}</li>}
+                {profile?.contacts.website && <li>{profile?.contacts.website}</li>}
+                {profile?.contacts.facebook && <li>{profile?.contacts.facebook}</li>}
+                {profile?.contacts.mainLink && <li>{profile?.contacts.mainLink}</li>}
+                {profile?.contacts.youtube && <li>{profile?.contacts.youtube}</li>}
 
             </div>
 
