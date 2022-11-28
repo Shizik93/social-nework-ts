@@ -1,24 +1,20 @@
 import m from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import React from "react";
-import {TypePost} from "../../../redux/profile-reducer";
+import {AddPostAC} from "../../../redux/profile-reducer";
 import AddNewPostForm from "./addNewPostForm";
+import {useAppDispatch, useAppSelector} from "../../../redux/hooks/hooks";
 
 
-type PropsMyProfileType = {
-    post: Array<TypePost>
-    addPost: (value:any) => void
-}
-
-export function MyPosts(props: PropsMyProfileType) {
+export const MyPosts = () => {
+    const post = useAppSelector(state => state.profileReducer.post)
+    const dispatch=useAppDispatch()
 
 
-    const addPost = (value:any) => {
-
-        props.addPost(value.newPost)
+    const addPost = (value:{newPost:string}) => {
+        dispatch(AddPostAC(value.newPost))
     }
 
-    const postsElement = props.post.map(p => <Post key={p.id} id={p.id} message={p.message} like={p.like}/>)
+    const postsElement = post.map(p => <Post key={p.id} id={p.id} message={p.message} like={p.like}/>)
     return (
         <div className={m.myPosts}>
 
@@ -30,4 +26,4 @@ export function MyPosts(props: PropsMyProfileType) {
         </div>
 
     )
-}
+};
