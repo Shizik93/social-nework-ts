@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
-import { AddPostAC } from '../../../redux/profile-reducer';
+import { AddPost } from '../../../redux/profile-reducer';
 
 import AddNewPostForm from './addNewPostForm';
 import m from './MyPosts.module.css';
@@ -10,7 +10,7 @@ export const MyPosts = () => {
   const dispatch = useAppDispatch();
 
   const addPost = (value: { newPost: string }) => {
-    dispatch(AddPostAC(value.newPost));
+    dispatch(AddPost(value.newPost));
   };
 
   const postsElement = post.map(p => (
