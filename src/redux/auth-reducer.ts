@@ -35,34 +35,46 @@ export const setAuthUserData = (
   return {
     type: USER_DATA,
     data: { userId, login, email, isAuth },
-  };
+  } as const;
 };
 
 export const authMeTC = (): AppThunk => async dispatch => {
-  const response = await authAPI.me();
+  try {
+    const response = await authAPI.me();
 
-  if (response.resultCode === 0) {
-    const { id, login, email } = response.data;
+    if (response.resultCode === 0) {
+      const { id, login, email } = response.data;
 
-    dispatch(setAuthUserData(id, login, email, true));
+      dispatch(setAuthUserData(id, login, email, true));
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 export const loginTC =
   (email: string, password: string, rememberMe: boolean): AppThunk =>
   async dispatch => {
-    const response = await authAPI.login(email, password, rememberMe);
+    try {
+      const response = await authAPI.login(email, password, rememberMe);
 
-    if (response.resultCode === 0) {
-      dispatch(authMeTC());
-    } else {
-      dispatch(stopSubmit('login', { _error: response.messages[0] }));
+      if (response.resultCode === 0) {
+        dispatch(authMeTC());
+      } else {
+        dispatch(stopSubmit('login', { _error: response.messages[0] }));
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 export const logoutTC = (): AppThunk => async dispatch => {
-  const response = await authAPI.logout();
+  try {
+    const response = await authAPI.logout();
 
-  if (response.data.resultCode === 0) {
-    dispatch(setAuthUserData(null, null, null, false));
+    if (response.data.resultCode === 0) {
+      dispatch(setAuthUserData(null, null, null, false));
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 

@@ -37,7 +37,7 @@ export const SendMessageAC = (value: any) => {
   return {
     type: SEND_MESSAGE,
     value,
-  };
+  } as const;
 };
 
 export type TypeDialogs = {

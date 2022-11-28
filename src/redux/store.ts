@@ -22,7 +22,6 @@ const reducers = combineReducers({
   form: formReducer,
 });
 
-export type RootType = typeof store;
 const store = createStore(reducers, applyMiddleware(ThunkMiddleware));
 
 export type AppRootStateType = ReturnType<typeof store.getState>;

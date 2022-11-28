@@ -24,12 +24,16 @@ export const appReducer = (
 const SetInitialized = () => {
   return {
     type: INITIALIZED,
-  };
+  } as const;
 };
 
 export const initializingAppTC = (): AppThunk => async dispatch => {
-  await dispatch(authMeTC());
-  dispatch(SetInitialized());
+  try {
+    await dispatch(authMeTC());
+    dispatch(SetInitialized());
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 type initialStateType = {
