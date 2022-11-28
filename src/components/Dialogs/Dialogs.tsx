@@ -1,33 +1,30 @@
-import React, {ChangeEvent} from "react";
-
 import m from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import { TypeDialogsPage } from "../../redux/dialogs-reducer";
 import AddNewPostForm from "./AddNewMessageForm";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
+import {SendMessageAC} from "../../redux/dialogs-reducer";
 
 
 
 
 
-type DialogsPropsType = {
-    AddNewMessage: (value:any) => void
-    state: TypeDialogsPage
-    isAuth:boolean
-}
+const Dialogs = () => {
+    const dispatch=useAppDispatch()
+    const dialogs=useAppSelector(state=>state.dialogsReducer.dialogs)
+    const messages=useAppSelector(state=>state.dialogsReducer.messages)
 
+    const AddNewMessage = (value: any ) => {
+        debugger
+        dispatch(SendMessageAC(value))
 
-function Dialogs(props: DialogsPropsType) {
-
-    const AddNewMessage = (value:any) => {
-        props.AddNewMessage(value.newMessage)
 
 
 
     }
 
-    const dialogsElements = props.state.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>,)
-    const messagesElements = props.state.messages.map(m => <Message message={m.message}/>)
+    const dialogsElements = dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>,)
+    const messagesElements = messages.map(m => <Message message={m.message}/>)
     return (
         <div className={m.dialogs}>
             <div className={m.dialogsItems}>
@@ -43,7 +40,7 @@ function Dialogs(props: DialogsPropsType) {
             <AddNewPostForm onSubmit={AddNewMessage}/>
         </div>
     )
-}
+};
 
 export default Dialogs
 
