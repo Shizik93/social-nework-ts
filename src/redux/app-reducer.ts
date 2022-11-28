@@ -1,38 +1,40 @@
 import {setLogin} from "./auth-reducer";
+import {AppThunk} from "./store";
 
-type initialStateType={
-    initialized:boolean
+const INITIALIZED = 'auth/SET-INITIALIZED'
+
+
+const initialState = {
+    initialized: false
 }
-const initialState={
-    initialized:false
-}
-export  type AppReducerType=SetInitializedType
-export const appReducer=(state:initialStateType=initialState,action:AppReducerType):initialStateType=>{
-    switch (action.type){
 
-        case 'SET-INITIALIZED':{
+export const appReducer = (state: initialStateType = initialState, action: AppReducerType): initialStateType => {
+    switch (action.type) {
 
-            return {...state,initialized:true}
+        case INITIALIZED : {
+
+            return {...state, initialized: true}
         }
-        default:return state
+        default:
+            return state
     }
 
 }
 
-const SetInitialized=()=>{
+const SetInitialized = () => {
 
-    return{
-        type:'SET-INITIALIZED',
-
-    }as const
+    return {
+        type: INITIALIZED,
+    }
 }
-type SetInitializedType=ReturnType<typeof SetInitialized>
-
-export const initializingApp = () =>(dispatch:any)=>{
-
-    dispatch(setLogin()).then(()=>{
-        dispatch(SetInitialized())
-    })
-
+export const initializingAppTC = (): AppThunk => async (dispatch) => {
+    await dispatch(setLogin())
+    dispatch(SetInitialized())
 
 }
+
+
+type initialStateType = {
+    initialized: boolean
+}
+export  type AppReducerType = ReturnType<typeof SetInitialized>
