@@ -1,4 +1,4 @@
-import {setLogin} from "./auth-reducer";
+import {authMeTC} from "./auth-reducer";
 import {AppThunk} from "./store";
 
 const INITIALIZED = 'auth/SET-INITIALIZED'
@@ -28,7 +28,7 @@ const SetInitialized = () => {
     }
 }
 export const initializingAppTC = (): AppThunk => async (dispatch) => {
-    await dispatch(setLogin())
+    await dispatch(authMeTC())
     dispatch(SetInitialized())
 
 }

@@ -2,7 +2,7 @@ import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../common/UI_Toolkit/FormsControls";
 import {required} from "../common/validators/validator";
-import {login} from "../../redux/auth-reducer";
+import {loginTC} from "../../redux/auth-reducer";
 import {connect, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {Navigate} from "react-router-dom";
@@ -61,4 +61,4 @@ if(isAuth){
     )
 
 }
-export default connect(null,{login})(Login)
+export default connect(null,{login: loginTC})(Login)
