@@ -1,56 +1,48 @@
-import React from "react";
+import React, {useEffect} from "react";
 import m from "./users.module.css";
 import img from "../../assets/images/userImg.png";
-import { NavLink } from "react-router-dom";
-type usersPropsType = {
-    SetUnsubscribe:(id:number)=>void,
-    users: Array<UserType>,
-    currentPage: number
-    onPageChanged: (pageNumber: number) => void
-    pages: number[],
-    subscribeUsers:Array<number>,
-    SetSubscribe:(id:number)=>void
-}
-export type UserType = {
-    name: string
-    id: number
-    uniqueUrlName: null | string
-    photos: {
-        small: null | string
-        large: null | string
-    }
-    status: null | string
-    followed: boolean
-}
-
-export function Users(props: usersPropsType) {
+import {NavLink} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
+import {Paginator} from "../common/Paginator/Paginator";
+import {getUsersTC, SetSubscribe, SetUnsubscribe} from "../../redux/users-reducer";
 
 
+
+
+export const Users = () => {
+    const dispatch=useAppDispatch()
+    const pageSize = useAppSelector(state => state.usersReducer.pageSize)
+    const currentPage = useAppSelector(state => state.usersReducer.currentPage)
+    const subscribeUsers=useAppSelector(state=>state.usersReducer.subscribeUsers)
+    const users=useAppSelector(state=>state.usersReducer.users)
+useEffect(()=>{
+    dispatch(getUsersTC(currentPage,pageSize))
+},[])
     return (
         <>
-            <div>
-                {props.pages.map(f =>
-                    <span key={f} className={`${props.currentPage === f && m.selectedPage}`}
-                          onClick={() => {
-                              props.onPageChanged(f)
-                          }}>{f} </span>)}
-            </div>
-            {props.users.map(f =>
+            <Paginator/>
+
+            {users.map(f =>
                 <div key={f.id}>
                     <div>
-                    <NavLink to={'/profile/'+f.id}>
-                        <img className={m.photo} src={f.photos.small !== null ? f.photos.small : img}/>
-                    </NavLink>
+                        <NavLink to={'/profile/' + f.id}>
+                            <img className={m.photo} src={f.photos.small !== null ? f.photos.small : img}/>
+                        </NavLink>
                     </div>
                     <div>{f.name}</div>
                     <div>{f.status}</div>
                     {f.followed ?
                         <button
-                            disabled={props.subscribeUsers.some(id=>id===f.id)}
-                            onClick={() => {props.SetSubscribe(f.id)}}>Unsubscribe</button> :
+                            disabled={subscribeUsers.some(id => id === f.id)}
+                            onClick={() => {
+                                dispatch(SetSubscribe(f.id))
+
+                            }}>Unsubscribe</button> :
                         <button
-                            disabled={props.subscribeUsers.some(id=>id===f.id)} onClick={() => {
-                            props.SetUnsubscribe(f.id)}}>Subscribe</button>}
+                            disabled={subscribeUsers.some(id => id === f.id)} onClick={() => {
+                                dispatch(SetUnsubscribe(f.id))
+
+                        }}>Subscribe</button>}
 
 
                 </div>)
@@ -59,4 +51,4 @@ export function Users(props: usersPropsType) {
         </>
 
     )
-}
+};
