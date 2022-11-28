@@ -1,11 +1,9 @@
-import React from "react";
-import m from './Music.module.css'
-function Music(){
-  return(
-      <div className={m.music}>
-          Music
-      </div>
-  )
-}
+import React from 'react';
 
-export default Music
+import m from './Music.module.css';
+
+const Music = () => {
+  return <div className={m.music}>Music</div>;
+};
+
+export default Music;

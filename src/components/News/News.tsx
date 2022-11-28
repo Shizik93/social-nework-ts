@@ -1,11 +1,9 @@
-import React from "react";
-import m from './News.module.css'
-function News () {
-  return(
-      <div className={m.news}>
-          News
-      </div>
-  )
-}
+import React from 'react';
 
-export default News
+import m from './News.module.css';
+
+const News = () => {
+  return <div className={m.news}>News</div>;
+};
+
+export default News;

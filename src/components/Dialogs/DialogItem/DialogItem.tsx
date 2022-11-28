@@ -1,14 +1,16 @@
-import m from "../Dialogs.module.css";
-import {NavLink} from "react-router-dom";
-import React from "react";
-import { TypeDialogs } from "../../../redux/dialogs-reducer";
+import React from 'react';
 
-function DialogItem(props:TypeDialogs) {
-    return (
-        <div className={m.dialog + '' + m.actives}>
-            <NavLink to={'/dialogs/' + props.id}>{props.name}</NavLink>
-        </div>
-    )
-}
+import { NavLink } from 'react-router-dom';
 
-export default DialogItem
+import { TypeDialogs } from '../../../redux/dialogs-reducer';
+import m from '../Dialogs.module.css';
+
+const DialogItem = ({ id, name }: TypeDialogs) => {
+  return (
+    <div className={`${m.dialog}${m.actives}`}>
+      <NavLink to={`/dialogs/${id}`}>{name}</NavLink>
+    </div>
+  );
+};
+
+export default DialogItem;

@@ -1,21 +1,19 @@
-import React from "react";
-import img from '../../../../assets/images/924874.png'
-import m from './Post.module.css'
-import {TypePost} from "../../../../redux/profile-reducer";
+import React from 'react';
 
-export function Post(props:TypePost) {
-    return (
-        <div className={m.post}>
-            <img src={img}/>
-            <div>{props.message}</div>
-            <div>
-                <span>like </span>
-                {props.like}
+import img from '../../../../assets/images/924874.png';
+import { TypePost } from '../../../../redux/profile-reducer';
 
-            </div>
+import m from './Post.module.css';
 
-
-        </div>
-
-    )
-}
+export const Post = (props: TypePost) => {
+  return (
+    <div className={m.post}>
+      <img src={img} />
+      <div>{props.message}</div>
+      <div>
+        <span>like </span>
+        {props.like}
+      </div>
+    </div>
+  );
+};
