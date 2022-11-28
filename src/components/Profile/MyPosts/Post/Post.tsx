@@ -1,5 +1,5 @@
 import React from "react";
-import img from './924874.png'
+import img from '../../../../assets/images/924874.png'
 import m from './Post.module.css'
 import {TypePost} from "../../../../redux/profile-reducer";
 

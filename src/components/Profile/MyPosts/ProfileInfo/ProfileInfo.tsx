@@ -1,6 +1,5 @@
-import React, {useEffect} from "react";
 import m from './ProfileInfo.module.css'
-import { ProfileStatusHooks } from "./ProfileStatusHooks";
+import { ProfileStatus } from "./ProfileStatus";
 import {useAppDispatch, useAppSelector} from "../../../../redux/hooks/hooks";
 import {setUserProfileStatusTC} from "../../../../redux/profile-reducer";
 
@@ -23,7 +22,7 @@ const ProfileInfo=()=> {
                 <img className={m.img}
                      src='https://worksolutions.ru/storage/UxBYDUfBNl9RfD5r6wMDvAWke3mGTfZaDcmHGZWc.png'/>
             </div>
-            <h3><ProfileStatusHooks status={status} updateStatus={updateStatus}/></h3>
+            <h3><ProfileStatus status={status} updateStatus={updateStatus}/></h3>
             <div className={m.descriptionBlock}>
                 {profile?.photos.large && <img src={profile.photos.large}/>}
                 <h1>{profile?.fullName}</h1>
