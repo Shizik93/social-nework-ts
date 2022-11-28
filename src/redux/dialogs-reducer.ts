@@ -1,19 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { v1 } from 'uuid';
 
-export type TypeDialogs = {
-  id: string;
-  name: string;
-};
-export type TypeMessage = {
-  message: string;
-};
-
-export type TypeDialogsPage = {
-  messages: Array<TypeMessage>;
-  dialogs: Array<TypeDialogs>;
-};
-export type initialDialogsStateType = TypeDialogsPage;
+const SEND_MESSAGE = 'dialogs/SEND-MESSAGE';
 
 const initialState: initialDialogsStateType = {
   messages: [
@@ -31,14 +19,13 @@ const initialState: initialDialogsStateType = {
   ],
 };
 
-export type dialogsReducerType = SendMessageActionType;
 export const dialogsReducer = (
   // eslint-disable-next-line default-param-last
   state: initialDialogsStateType = initialState,
   action: dialogsReducerType,
 ): initialDialogsStateType => {
   switch (action.type) {
-    case 'SEND-MESSAGE': {
+    case SEND_MESSAGE: {
       return { ...state, messages: [...state.messages, { message: action.value }] };
     }
     default:
@@ -46,10 +33,23 @@ export const dialogsReducer = (
   }
 };
 
-export type SendMessageActionType = ReturnType<typeof SendMessageAC>;
 export const SendMessageAC = (value: any) => {
   return {
-    type: 'SEND-MESSAGE',
+    type: SEND_MESSAGE,
     value,
-  } as const;
+  };
 };
+
+export type TypeDialogs = {
+  id: string;
+  name: string;
+};
+export type TypeMessage = {
+  message: string;
+};
+export type TypeDialogsPage = {
+  messages: Array<TypeMessage>;
+  dialogs: Array<TypeDialogs>;
+};
+export type initialDialogsStateType = TypeDialogsPage;
+export type dialogsReducerType = ReturnType<typeof SendMessageAC>;

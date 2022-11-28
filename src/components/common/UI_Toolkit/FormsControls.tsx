@@ -11,6 +11,7 @@ const FormControl = (props: any) => {
     <div className={error ? style.error : style.form}>
       {/* eslint-disable-next-line react/destructuring-assignment */}
       <div>{props.children}</div>
+      {/* eslint-disable-next-line react/destructuring-assignment */}
       {error && <span className={style.error}>{props.meta.error}</span>}
     </div>
   );
