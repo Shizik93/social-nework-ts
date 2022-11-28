@@ -16,6 +16,7 @@ type DialogsPropsType = {
     isAuth:boolean
 }
 
+
 function Dialogs(props: DialogsPropsType) {
 
     const AddNewMessage = (value:any) => {
